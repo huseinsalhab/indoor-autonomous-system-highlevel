@@ -71,7 +71,7 @@ def sufficiently_different(c, r): # current, requested
     return False
 
 def calcTicks(hz, pulseInMilliseconds):
-	print(hz, pulseInMilliseconds)
+	# print(hz, pulseInMilliseconds)
 	cycle = 1000 / hz
 	timePerTick = cycle / 4096
 	ticks = pulseInMilliseconds / timePerTick

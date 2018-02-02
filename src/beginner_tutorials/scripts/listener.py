@@ -1,16 +1,19 @@
 #!/usr/bin/env python
 import rospy
 from std_msgs.msg import String
+from geometry_msgs.msg import Twist
 from motors import *  
 
 motor = MotorController()
 
 #    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
 def callback(data):
-    if data.data == "up" :
+    #print (data)
+    #print (data.linear)
+    if data.linear.x == 2.0 :
         motor.pwm.set_pwm(motor.channel['A'], 0, int(calcTicks(motor.freq, 2.0)))
         rospy.loginfo(" up")
-    elif data.data == "down":
+    elif data.linear.x == -2.0:
         motor.pwm.set_pwm(motor.channel['A'], 0, int(calcTicks(motor.freq, 1.0)))
         rospy.loginfo(" down")
     else:
@@ -26,7 +29,7 @@ def listener():
     # run simultaneously.
     rospy.init_node('listener', anonymous=True)
 
-    rospy.Subscriber("chatter", String, callback)
+    rospy.Subscriber("turtle1/cmd_vel", Twist, callback)
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
