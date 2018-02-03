@@ -15,9 +15,11 @@ Search on google before asking for help.
 #### Specifics
 1. USE RELEVANT NAMES FOR VARIABLES. Unless it is a super obvious abbreviation, or letter (ex. int "i" in a for loop, you dont need to name it "iterator".)
 2. USE PARENTHESES. Do not rely on your knowledge of operator precedence. Use parentheses in complex logical structures (Logical, Boolean, Arithmetic operators). 
+
 		Example:
 		This is BAD: (var1 && var2 || var3 ^ var4)
 		This is GOOD: ( (var1 && var2) || (var 3 ^ var4) )
+		
 3.  Everytime that you edit a file, make sure that you are using SPACES for TABS. Make sure UNIX line endings, unless you know what u are doing, no editing code on windows (go through cloud9, a VM, or your raspberry PI, or linux environment to edit code).
 		:set ff=unix
 
