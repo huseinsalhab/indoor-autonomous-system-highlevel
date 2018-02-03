@@ -22,10 +22,10 @@ Search on google before asking for help.
 		:set ff=unix
 
 <p align="center">
-  <img src="https://pasteboard.co/H5SkFiL.png" width="350"/>
+  <img src="https://cdn.pbrd.co/images/H5SkFiL.png" width="350"/>
 
 </p>
-![alt text](https://pasteboard.co/H5SkFiL.png)
+![alt text](https://cdn.pbrd.co/images/H5SkFiL.png)
 
 4. ALL FUNCTIONS, a comment above (multi or single line, just be consistent), listing return type, argument type, and EXPLANATIONS IN ORDER for ALL ARGUMENTS IN ORDER.
 5. USE K&R braces and indentation style
