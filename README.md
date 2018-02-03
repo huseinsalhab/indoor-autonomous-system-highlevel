@@ -19,6 +19,8 @@ Search on google before asking for help.
 		This is BAD: (var1 && var2 || var3 ^ var4)
 		This is GOOD: ( (var1 && var2) || (var 3 ^ var4) )
 3.  Everytime that you edit a file, make sure that you are using SPACES for TABS. Make sure UNIX line endings, unless you know what u are doing, no editing code on windows (go through cloud9, a VM, or your raspberry PI, or linux environment to edit code).
+		:set ff=unix
+		![alt text](https://pasteboard.co/H5SkFiL.png)
 4. ALL FUNCTIONS, a comment above (multi or single line, just be consistent), listing return type, argument type, and EXPLANATIONS IN ORDER for ALL ARGUMENTS IN ORDER.
 5. USE K&R braces and indentation style
 		
