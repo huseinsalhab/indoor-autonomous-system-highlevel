@@ -37,8 +37,8 @@ Search on google before asking for help.
 		C/C++ SINGLE LINE IF STATEMENT ALWAYS HAS BRACES NO MATTER WHAT
 
 #### Version Control
-0. Make a branch for any features that you need to add. (Git checkout -b kelvin.new_feature)
-1. The proper naming for a branch: 
+1. Make a branch for any features that you need to add. (Git checkout -b kelvin.new_feature)
+1.5. The proper naming for a branch: 
 		
 		first_name.feature_name
 		kelvin.adding_slam_module
