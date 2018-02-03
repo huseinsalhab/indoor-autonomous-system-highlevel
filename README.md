@@ -21,6 +21,7 @@ Search on google before asking for help.
 		This is GOOD: ( (var1 && var2) || (var 3 ^ var4) )
 		
 3.  Everytime that you edit a file, make sure that you are using SPACES for TABS. Make sure UNIX line endings, unless you know what u are doing, no editing code on windows (go through cloud9, a VM, or your raspberry PI, or linux environment to edit code).
+		
 		:set ff=unix
 
 <p align="center">
