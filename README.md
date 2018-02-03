@@ -38,13 +38,14 @@ Search on google before asking for help.
 
 #### Version Control
 1. Make a branch for any features that you need to add. (Git checkout -b kelvin.new_feature)
-1.5. The proper naming for a branch: 
+
+2. The proper naming for a branch: 
 		
 		first_name.feature_name
 		kelvin.adding_slam_module
-2. GIT PULL before you start writing code.
-3. Write a sensible commit statement (nothing too long, nothing too short). Im not too strict on this
-4. Dont Commit for every little thing you write. Dont commit for HUGE updates. Be somewhere in the middle
+3. GIT PULL before you start writing code.
+4. Write a sensible commit statement (nothing too long, nothing too short). Im not too strict on this
+5. Dont Commit for every little thing you write. Dont commit for HUGE updates. Be somewhere in the middle
 
 		
 	
