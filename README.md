@@ -1,17 +1,17 @@
-##Self Driving Car CE 123
+## Self Driving Car CE 123
 
-###Coding Standards Doc
+### Coding Standards Doc
 
-####Golden Rule
+#### Golden Rule
 Search on google before asking for help.
 
-####Preamble
+#### Preamble
 1. Every file, the first line will be your name, and date
 2. Every file, the second line will be a short description purpose of the code written
 3. Reserve 3-4 lines (multiline comment) for any links, resources, or help that you get while writing your code. The purpose is to keep tracks of links you use in case we run into similar problems again (VERY IMPORTANT).
 4. For step 3, do this for every file, or for blocks of code where the links are relevant.
 
-####Specifics
+#### Specifics
 1. USE RELEVANT NAMES FOR VARIABLES. Unless it is a super obvious abbreviation, or letter (for ex, int "i" in a for loop, you dont need to name it "iterator".)
 2. USE PARENTHESES. Do not rely on your knowledge of operator precedence. Use parentheses in complex logical structures (Logical, Boolean, Arithmetic operators). 
 		Example:
@@ -24,7 +24,7 @@ Search on google before asking for help.
 		https://en.wikipedia.org/wiki/Indentation_style#K&R
 		C/C++ SINGLE LINE IF STATEMENT ALWAYS HAS BRACES NO MATTER WHAT
 
-####Version Control
+#### Version Control
 0. Make a branch for any features that you need to add. (Git checkout -b kelvin.new_feature)
 1. The proper naming for a branch: 
 		
