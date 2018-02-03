@@ -231,6 +231,15 @@ Project_SOURCE_DIR:STATIC=/home/ubuntu/catkin_ws/src
 //Path to a library.
 RT_LIBRARY:FILEPATH=/usr/lib/arm-linux-gnueabihf/librt.so
 
+//Path to a library.
+SDLMAIN_LIBRARY:FILEPATH=/usr/lib/arm-linux-gnueabihf/libSDLmain.a
+
+//Path to a file.
+SDL_INCLUDE_DIR:PATH=/usr/include/SDL
+
+//Where the SDL Library can be found
+SDL_LIBRARY:STRING=/usr/lib/arm-linux-gnueabihf/libSDLmain.a;/usr/lib/arm-linux-gnueabihf/libSDL.so;-lpthread
+
 //Enable debian style python package layout
 SETUPTOOLS_DEB_LAYOUT:BOOL=ON
 
@@ -264,6 +273,24 @@ fiducial_follow_BINARY_DIR:STATIC=/home/ubuntu/catkin_ws/build/demos/fiducial_fo
 //Value Computed by CMake
 fiducial_follow_SOURCE_DIR:STATIC=/home/ubuntu/catkin_ws/src/demos/fiducial_follow
 
+//The directory containing a CMake configuration file for gencpp.
+gencpp_DIR:PATH=/opt/ros/kinetic/share/gencpp/cmake
+
+//The directory containing a CMake configuration file for geneus.
+geneus_DIR:PATH=/opt/ros/kinetic/share/geneus/cmake
+
+//The directory containing a CMake configuration file for genlisp.
+genlisp_DIR:PATH=/opt/ros/kinetic/share/genlisp/cmake
+
+//The directory containing a CMake configuration file for genmsg.
+genmsg_DIR:PATH=/opt/ros/kinetic/share/genmsg/cmake
+
+//The directory containing a CMake configuration file for gennodejs.
+gennodejs_DIR:PATH=/opt/ros/kinetic/share/gennodejs/cmake
+
+//The directory containing a CMake configuration file for genpy.
+genpy_DIR:PATH=/opt/ros/kinetic/share/genpy/cmake
+
 //Value Computed by CMake
 gtest_BINARY_DIR:STATIC=/home/ubuntu/catkin_ws/build/gtest
 
@@ -289,8 +316,17 @@ gtest_force_shared_crt:BOOL=OFF
 //Dependencies for the target
 gtest_main_LIB_DEPENDS:STATIC=general;-lpthread;general;gtest;
 
+//Value Computed by CMake
+keyboard_BINARY_DIR:STATIC=/home/ubuntu/catkin_ws/build/ros-keyboard
+
+//Value Computed by CMake
+keyboard_SOURCE_DIR:STATIC=/home/ubuntu/catkin_ws/src/ros-keyboard
+
 //Path to a library.
 lib:FILEPATH=/opt/ros/kinetic/lib/libxmlrpcpp.so
+
+//The directory containing a CMake configuration file for message_generation.
+message_generation_DIR:PATH=/opt/ros/kinetic/share/message_generation/cmake
 
 //The directory containing a CMake configuration file for message_runtime.
 message_runtime_DIR:PATH=/opt/ros/kinetic/share/message_runtime/cmake
@@ -424,7 +460,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=4
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=5
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -465,6 +501,8 @@ CMAKE_UNAME:INTERNAL=/bin/uname
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding PythonInterp
 FIND_PACKAGE_MESSAGE_DETAILS_PythonInterp:INTERNAL=[/usr/bin/python][v2.7.12()]
+//Details about finding SDL
+FIND_PACKAGE_MESSAGE_DETAILS_SDL:INTERNAL=[/usr/lib/arm-linux-gnueabihf/libSDLmain.a;/usr/lib/arm-linux-gnueabihf/libSDL.so;-lpthread][/usr/include/SDL][v1.2.15()]
 //Details about finding Threads
 FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 GTEST_FROM_SOURCE_FOUND:INTERNAL=TRUE
@@ -488,4 +526,5 @@ PYTHON_EXECUTABLE-ADVANCED:INTERNAL=1
 //  And it needs to match.  But setuptools won't tell us where
 // it will install things.
 PYTHON_INSTALL_DIR:INTERNAL=lib/python2.7/dist-packages
+SDL_LIBRARY_TEMP:INTERNAL=/usr/lib/arm-linux-gnueabihf/libSDLmain.a;/usr/lib/arm-linux-gnueabihf/libSDL.so;-lpthread;-lpthread
 

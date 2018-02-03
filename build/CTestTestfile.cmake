@@ -7,3 +7,4 @@
 subdirs(gtest)
 subdirs(demos/fiducial_follow)
 subdirs(beginner_tutorials)
+subdirs(ros-keyboard)
