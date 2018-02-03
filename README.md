@@ -10,7 +10,7 @@ Search on google before asking for help.
 2. Every file, the second line will be a short description purpose of the code written
 3. Reserve 3-4 lines (multiline comment) for any links, resources, or help that you get while writing your code. The purpose is to keep tracks of links you use in case we run into similar problems again (VERY IMPORTANT).
 4. For step 3, do this for every file, or for blocks of code where the links are relevant.
-5. Make comments short, but with good explanation. Nothing too long, nothing too short. Comments are for things that are not obvious, or to highlight and explain salient lines of code.
+5. Make comments short, but with good explanation. Nothing too long, nothing too short. Comments are for things that are not obvious, or to highlight and explain salient (relevant) lines of code.
 
 #### Specifics
 1. USE RELEVANT NAMES FOR VARIABLES. Unless it is a super obvious abbreviation, or letter (for ex, int "i" in a for loop, you dont need to name it "iterator".)
