@@ -13,7 +13,7 @@ Search on google before asking for help.
 5. Make comments short, but with good explanation. Nothing too long, nothing too short. Comments are for things that are not obvious, or to highlight and explain salient (relevant) lines of code.
 
 #### Specifics
-1. USE RELEVANT NAMES FOR VARIABLES. Unless it is a super obvious abbreviation, or letter (for ex, int "i" in a for loop, you dont need to name it "iterator".)
+1. USE RELEVANT NAMES FOR VARIABLES. Unless it is a super obvious abbreviation, or letter (ex. int "i" in a for loop, you dont need to name it "iterator".)
 2. USE PARENTHESES. Do not rely on your knowledge of operator precedence. Use parentheses in complex logical structures (Logical, Boolean, Arithmetic operators). 
 		Example:
 		This is BAD: (var1 && var2 || var3 ^ var4)
