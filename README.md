@@ -35,6 +35,8 @@ Search on google before asking for help.
 		
 		https://en.wikipedia.org/wiki/Indentation_style#K&R
 		C/C++ SINGLE LINE IF STATEMENT ALWAYS HAS BRACES NO MATTER WHAT
+		
+6. Use single quotes for python strings.
 
 #### Version Control
 1. Make a branch for any features that you need to add. (Git checkout -b kelvin.new_feature)
