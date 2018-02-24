@@ -3,6 +3,6 @@
 
     <node name="listener" pkg="beginner_tutorials" type="listener.py" />
     <node name="controller" pkg="beginner_tutorials" type="controller.py" />
-    <node name="server" pkg="beginner_tutorials" type="server.py" />
+    <!--node name="server" pkg="beginner_tutorials" type="server.py" /-->
 
 </launch>
