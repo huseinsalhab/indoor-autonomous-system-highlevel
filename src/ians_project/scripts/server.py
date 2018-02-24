@@ -22,10 +22,13 @@ class ServerListener(object):
     def ping(self, f):
         """Listen for events to happen"""
         while True:
-            current_request = requests.get('http://35.229.88.91/v1/command')
-            if current_request.text == '0':
-                f('kill')            
-            sleep(.1)
+            try:
+                current_request = requests.get('http://35.229.88.91/v1/command')
+                if current_request.text == '0':
+                    f('kill')            
+            except:
+                pass
+            sleep(.5)
 def car_server_talker():
     server = ServerListener()
 
