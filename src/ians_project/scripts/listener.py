@@ -17,7 +17,7 @@ def callback(data):
     if data.data[1] == 'w' :
 
         if data.data[0] == 'd':
-            carMotor.set_throttle(0.25)
+            carMotor.set_throttle(0.35)
         elif data.data[0] == 'u':
             carMotor.set_throttle(0)
 
@@ -28,7 +28,7 @@ def callback(data):
         if data.data[0] == 'u':
             carMotor.set_throttle(0)
         elif data.data[0] == 'd':
-            carMotor.set_throttle(-0.25)
+            carMotor.set_throttle(-0.45)
 
         rospy.loginfo('down')
     #turn right
