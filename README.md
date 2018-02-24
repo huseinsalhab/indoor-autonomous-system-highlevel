@@ -1,4 +1,10 @@
-## Self Driving Car CE 123
+# Indoor Autonomous Navigation System 
+
+### Setting Up the Workspace
+1. Clone this project.
+2. Cd into this project and type `catkin_make`
+3. Cd into devel, and source setup.bash
+4. rosrun beginner_tutorials <module.py> 
 
 ### Coding Standards Doc
 
