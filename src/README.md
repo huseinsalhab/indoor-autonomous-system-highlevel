@@ -5,10 +5,10 @@ ians_simulation -- contains setup for Gazebo simulation
 
 .
 ├── ians_project
-│   ├── bagfiles
-│   ├── control
-│   ├── launch
-│   ├── mapping
+|   ├── bagfiles
+|   ├── control
+|   ├── launch
+|   ├── mapping
 │   │   ├── launch
 │   │   ├── maps
 │   │   └── rviz
