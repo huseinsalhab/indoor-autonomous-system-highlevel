@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Kelvin Silva, 2/11/2018. This file sets up the gazebo world simulation for diff drive robot -->
+
+<launch>
+	<arg name="world" default="empty"/>
+	<arg name="paused" default="false"/>
+	<arg name="use_sim_time" default="true"/>
+	<arg name="gui" default="true"/>
+	<arg name="headless" default="false"/>
+	<arg name="debug" default="false"/>
+	
+	<include file="$(find gazebo_ros)/launch/empty_world.launch">
+		<arg name="world_name" value="$(find diff_drive_gazebo)/worlds/baskin_test_world.world"/>
+		<arg name="paused" value="$(arg paused)"/>
+		<arg name="use_sim_time" value="$(arg use_sim_time)"/>
+		<arg name="gui" value="$(arg gui)"/>
+		<arg name="headless" value="$(arg headless)"/>
+		<arg name="debug" value="$(arg debug)"/>
+	</include>
+
+	<!-- the next line expands the description (gazebo model) xacro, and inserts it into the diff drive spawn node, which calls gazebo ros with the robot "description" (which is a model). -->
+
+	<param name="robot_description" command="$(find xacro)/xacro.py '$(find diff_drive_description)/urdf/diff_drive.xacro'"/>
+
+	<node name="diff_drive_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model diff_drive" />
+
+	
+
+</launch>
+
+ 

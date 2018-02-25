@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<!-- Kelvin Silva, 2/11/2018, This file describes the gazebo world. Referenced in the launch file -->
+
+<sdf version="1.4">
+
+	<world name="default">
+		<!--include>
+			<uri>model://willowgarage</uri>
+		</include-->
+
+		<!-- light source-->
+		<include>
+			<uri>model://ground_plane</uri>
+		</include>
+
+		<include>
+			<uri>model://sun</uri>
+		</include>
+
+
+		<gui fullscreen='0'>
+
+			<camera name='user_camera'>
+				<pose>4.927 4.37 3.74 0.0 0.27 2.35</pose>
+				<view_controller>orbit</view_controller>
+			</camera>
+		</gui>	
+	</world>
+
+</sdf>
+
+
+	
