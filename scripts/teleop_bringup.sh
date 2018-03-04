@@ -1,3 +1,3 @@
 #!/bin/bash
 
-roslaunch ians_project teleop.launch
+roslaunch ians_control teleop.launch

@@ -1,7 +1,0 @@
-<launch>
-
-
-    <node name="listener" pkg="ians_project" type="listener.py" />
-    <node name="controller" pkg="ians_project" type="controller.py" />
-
-</launch>
