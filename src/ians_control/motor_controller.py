@@ -3,7 +3,7 @@ import rospy
 from std_msgs.msg import String
 # from geometry_msgs.msg import Twist
 # from motors import * 
-import drivetrain
+import embedded_interface.drivetrain
 
 steer = drivetrain.SteeringController()
 carMotor = drivetrain.ThrottleController() 
