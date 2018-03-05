@@ -14,10 +14,14 @@
    topic.
 
    This program uses the Mosquitto MQTT broker to receive MQTT messages.
-
-   COMPILING: make sure to include the argument "-l mosquitto" to include the
-   Mosquitto library.
 */
+
+struct rosPubsStruct {
+    ros::Publisher killSwitch_pub;
+    ros::Publisher dst_pub;
+    ros::Publisher map_pub;
+};
+
 
 // this function verifies that the connection was established successfully
 void connect_callback(struct mosquitto *mosq, void *obj, int result) {
@@ -25,50 +29,52 @@ void connect_callback(struct mosquitto *mosq, void *obj, int result) {
 }
 
 // this function defines how the program reacts to incoming messages
-void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message)
-    {
-    bool match = 0;
-
+void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message) {
     // *obj is a ROS Pub. 
-    ros::Publisher* blah = ((ros::Publisher*) obj);
+    struct rosPubsStruct* rosPubs;
+    rosPubs = (struct rosPubsStruct*) obj;
 
     fprintf(stdout, "received message '%.*s' for topic '%s'\n", message->payloadlen,
             (char*)message->payload, message->topic);
     std_msgs::String msg;   // a message object
     std::stringstream ss;
     ss << (char*)message->payload;
-    // msg.data = ss.str();    // set the payload as the message data
-    msg.data = (char*)message->payload;    // set the payload as the message data
-    std::cout << " -- " << msg.data << " -- ";
-    blah->publish(msg);
-    printf("line 37 \n");
+    msg.data = ss.str();    // set the payload as the message data
+    std::cout << "line 45\n";
+    std::cout << message->topic << "\n";
+
+    if(strcmp("robot/killSwitch", message->topic) == 0) {
+        std::cout << "line 47\n";
+        rosPubs->killSwitch_pub.publish(msg);
+    }
+    if(strcmp("robot/dst", message->topic) == 0) {
+        std::cout << "line 51\n";
+        rosPubs->dst_pub.publish(msg);
+    }
+    if(strcmp("robot/map", message->topic) == 0) {
+        std::cout << "line 55\n";
+        rosPubs->map_pub.publish(msg);
+    }
+    std::cout << "returning\n";
     return;
-
-    /*
-    mosquitto_topic_matches_sub("/robot/killSwitch", message->topic, &match);
-    if(match)
-        killSwitch_pub.pub(msg);
-
-    mosquitto_topic_matches_sub("/robot/dst", message->topic, &match);
-    if(match)
-        dst_pub.pub(msg);
-    mosquitto_topic_matches_sub("/robot/server_map_msgs", message->topic, &match);
-    if(match)
-        map_pub(msg);
-    */
-
 }
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "server_interface_node");
     ros::NodeHandle n;
-    ros::Publisher killSwitch_pub = n.advertise<std_msgs::String>("robot/killSwitch", queue_length);
-    ros::Publisher dst_pub = n.advertise<std_msgs::String>("robot/dst", queue_length);
-    ros::Publisher map_pub = n.advertise<std_msgs::String>("robot/server_map_msgs", queue_length);
-    
+    std::cout << "declared ros::NodeHandle n \n";
+    struct rosPubsStruct rosPubs;
+    std::cout << "declared rospubsStruct* rosPubs\n";
+    rosPubs.killSwitch_pub = n.advertise<std_msgs::String>("robot/killSwitch", queue_length);
+    std::cout << "assigned rosPubs->killSwitch_pun\n";
+    rosPubs.dst_pub = n.advertise<std_msgs::String>("robot/dst", queue_length);
+    std::cout << "assigned rosPubs->dst_pub\n";
+    rosPubs.map_pub =  n.advertise<std_msgs::String>("robot/server_map_msgs", queue_length);
+    std::cout << "assigned rosPubs->map_pub\n";
+
     mosquitto_lib_init(); 
     struct mosquitto *mosq = NULL;
-    mosq = mosquitto_new("foo", false, (void*) &map_pub);
+    mosq = mosquitto_new("foo", false, (void*) &rosPubs);
 
     if (!mosq) { // make sure the structure initialized
         printf("failed to initialize mosquitto instance \n");
