@@ -25,6 +25,7 @@ struct rosPubsStruct {
 
 // this function verifies that the connection was established successfully
 void connect_callback(struct mosquitto *mosq, void *obj, int result) {
+    std::cout << "connected\n";
     return;
 }
 
@@ -34,9 +35,9 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
     struct rosPubsStruct* rosPubs;
     rosPubs = (struct rosPubsStruct*) obj;
 
-    /*fprintf(stdout, "received message '%.*s' for topic '%s'\n", message->payloadlen,
+    fprintf(stdout, "received message '%.*s' for topic '%s'\n", message->payloadlen,
             (char*)message->payload, message->topic);
-    */    
+        
     std_msgs::String msg;   // a message object
     std::stringstream ss;
     ss << (char*)message->payload;
@@ -49,7 +50,7 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
     if(strcmp("robot/dst", message->topic) == 0) {
         rosPubs->dst_pub.publish(msg);
     }
-    if(strcmp("robot/map", message->topic) == 0) {
+    if(strcmp("robot/map_msgs", message->topic) == 0) {
         rosPubs->map_pub.publish(msg);
     }
     return;
@@ -62,7 +63,7 @@ int main(int argc, char **argv) {
     // create publishers for each topic and assign the struct fields to them
     rosPubs.killSwitch_pub = n.advertise<std_msgs::String>("robot/killSwitch", queue_length);
     rosPubs.dst_pub = n.advertise<std_msgs::String>("robot/dst", queue_length);
-    rosPubs.map_pub = n.advertise<std_msgs::String>("robot/server_map_msgs", queue_length);
+    rosPubs.map_pub = n.advertise<std_msgs::String>("robot/map_msgs", queue_length);
 
     mosquitto_lib_init(); 
     struct mosquitto *mosq = NULL;
@@ -84,6 +85,8 @@ int main(int argc, char **argv) {
     }
 
     mosquitto_subscribe(mosq, NULL, "robot/killSwitch", 0);
+    mosquitto_subscribe(mosq, NULL, "robot/dst", 0);
+    mosquitto_subscribe(mosq, NULL, "robot/map_msgs", 0);
 
     // run an infinite loop that listens for messages and processes them
     mosquitto_loop_forever(mosq, -1, 1);
