@@ -25,7 +25,7 @@ struct rosPubsStruct {
 
 // this function verifies that the connection was established successfully
 void connect_callback(struct mosquitto *mosq, void *obj, int result) {
-    printf("connect callback\n");
+    return;
 }
 
 // this function defines how the program reacts to incoming messages
@@ -34,46 +34,39 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
     struct rosPubsStruct* rosPubs;
     rosPubs = (struct rosPubsStruct*) obj;
 
-    fprintf(stdout, "received message '%.*s' for topic '%s'\n", message->payloadlen,
+    /*fprintf(stdout, "received message '%.*s' for topic '%s'\n", message->payloadlen,
             (char*)message->payload, message->topic);
+    */    
     std_msgs::String msg;   // a message object
     std::stringstream ss;
     ss << (char*)message->payload;
     msg.data = ss.str();    // set the payload as the message data
-    std::cout << "line 45\n";
-    std::cout << message->topic << "\n";
 
+    // check expected topics. if there's a match, publish to that topic
     if(strcmp("robot/killSwitch", message->topic) == 0) {
-        std::cout << "line 47\n";
         rosPubs->killSwitch_pub.publish(msg);
     }
     if(strcmp("robot/dst", message->topic) == 0) {
-        std::cout << "line 51\n";
         rosPubs->dst_pub.publish(msg);
     }
     if(strcmp("robot/map", message->topic) == 0) {
-        std::cout << "line 55\n";
         rosPubs->map_pub.publish(msg);
     }
-    std::cout << "returning\n";
     return;
 }
 
 int main(int argc, char **argv) {
     ros::init(argc, argv, "server_interface_node");
     ros::NodeHandle n;
-    std::cout << "declared ros::NodeHandle n \n";
     struct rosPubsStruct rosPubs;
-    std::cout << "declared rospubsStruct* rosPubs\n";
+    // create publishers for each topic and assign the struct fields to them
     rosPubs.killSwitch_pub = n.advertise<std_msgs::String>("robot/killSwitch", queue_length);
-    std::cout << "assigned rosPubs->killSwitch_pun\n";
     rosPubs.dst_pub = n.advertise<std_msgs::String>("robot/dst", queue_length);
-    std::cout << "assigned rosPubs->dst_pub\n";
-    rosPubs.map_pub =  n.advertise<std_msgs::String>("robot/server_map_msgs", queue_length);
-    std::cout << "assigned rosPubs->map_pub\n";
+    rosPubs.map_pub = n.advertise<std_msgs::String>("robot/server_map_msgs", queue_length);
 
     mosquitto_lib_init(); 
     struct mosquitto *mosq = NULL;
+    // create a mosquitto instance. 
     mosq = mosquitto_new("foo", false, (void*) &rosPubs);
 
     if (!mosq) { // make sure the structure initialized
