@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# touch test
 # roscore
 # source /home/ubuntu/.bashrc
  source /opt/ros/kinetic/setup.bash
