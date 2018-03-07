@@ -1,6 +1,7 @@
 <launch>
 
     <node name="keyboard" pkg="ians_control" type="keyboard_listener.py" />
+    <node name="ians_control_server" pkg="ians_control" type="ians_control_server" />
     <node name="motors" pkg="ians_control" type="motor_controller.py" />
 
 </launch>
