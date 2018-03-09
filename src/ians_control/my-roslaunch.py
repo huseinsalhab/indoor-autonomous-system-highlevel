@@ -4,6 +4,7 @@ import roslaunch
 import rospy
 from time import sleep 
 from std_msgs.msg import String
+import my_test
 
 def blah():
     package = 'ians_control'
@@ -24,17 +25,8 @@ def blah():
 def master_callback(msg):
     print('Just heard', msg )
     print('Booting up motor node...')
-    package = 'ians_control'
-    executable = 'motor_controller.py'
-    server_node = roslaunch.core.Node(package, executable)
 
-    launch = roslaunch.scriptapi.ROSLaunch()
-    launch.start()
-
-    process = launch.launch(server_node)
-    print(process.is_alive)
-    sleep(10)
-    process.stop()
+    my_test.test()
 
 def main():
     # Create a ROS Listener to recieve future messages
