@@ -20,6 +20,7 @@ struct rosPubsStruct {
     ros::Publisher killSwitch_pub;
     ros::Publisher dst_pub;
     ros::Publisher map_pub;
+    ros::Publisher mapping_pub;
 };
 
 
@@ -53,6 +54,9 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
     if(strcmp("robot/map_msgs", message->topic) == 0) {
         rosPubs->map_pub.publish(msg);
     }
+    if(strcmp("robot/mapping", message->topic) == 0) {
+        rosPubs->mapping_pub.publish(msg);
+    }
     return;
 }
 
@@ -64,6 +68,8 @@ int main(int argc, char **argv) {
     rosPubs.killSwitch_pub = n.advertise<std_msgs::String>("robot/killSwitch", queue_length);
     rosPubs.dst_pub = n.advertise<std_msgs::String>("robot/dst", queue_length);
     rosPubs.map_pub = n.advertise<std_msgs::String>("robot/map_msgs", queue_length);
+    rosPubs.mapping_pub = n.advertise<std_msgs::String>("robot/mapping", queue_length);
+
 
     mosquitto_lib_init(); 
     struct mosquitto *mosq = NULL;
@@ -87,6 +93,7 @@ int main(int argc, char **argv) {
     mosquitto_subscribe(mosq, NULL, "robot/killSwitch", 0);
     mosquitto_subscribe(mosq, NULL, "robot/dst", 0);
     mosquitto_subscribe(mosq, NULL, "robot/map_msgs", 0);
+    mosquitto_subscribe(mosq, NULL, "robot/mapping", 0);
 
     // run an infinite loop that listens for messages and processes them
     mosquitto_loop_forever(mosq, -1, 1);
