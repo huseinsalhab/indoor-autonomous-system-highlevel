@@ -1,10 +1,9 @@
 #include <mosquitto.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 #include <iostream>
-#include "ros/ros.h"
-#include "std_msgs/String.h"
 
 #define queue_length 32 
 #define cmd_len 256
@@ -21,7 +20,7 @@
 */
 
 //motorDisable is a global variable that controls whether the robot may move
-uint8_t motorDisable;
+uint8_t motorDisable = 0;
 
 //this function is a wrapper for system() that includes error checking
 int System(const char* command) {
@@ -41,19 +40,19 @@ int downloadMap(char* mapID) {
     if(strcat(cmd, mapID) == null)
         return -1;
     */
-    char* cmd = "curl http://35.229.88.91/v1/map.png"
+    char* cmd = "curl http://35.229.88.91/v1/map.png";
     return System(cmd);
 }
 
 //this function runs a shell script that starts ROS nodes used for mapping
 void startMapping() {
-    System("~/catkin_ws/indoor-autonomous-system-highlevel/scripts/teleop_bringup.sh");
+    System("/home/ubuntu/indoor-autonomous-system-highlevel/src/ians_control/scripts/startMapping.sh");
 }
 
 
 //this function runs a shell script that stops ROS nodes used for mapping
 void stopMapping() {
-    System("~/catkin_ws/indoor-autonomous-system-highlevel/scripts/teleop_shutdown.sh");
+    System("/home/ubuntu/indoor-autonomous-system-highlevel/src/ians_control/scripts/stopMapping.sh");
 }
 
 // this function verifies that the connection was established successfully
@@ -68,10 +67,6 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
     fprintf(stdout, "received message '%.*s' for topic '%s'\n", message->payloadlen,
             (char*)message->payload, message->topic);
         
-    std_msgs::String msg;   // a message object
-    std::stringstream ss;
-    ss << (char*)message->payload;
-    msg.data = ss.str();    // set the payload as the message data
 
     // check expected topics. if there's a match, publish to that topic
     if(strcmp("robot/motorDisable", message->topic) == 0) {
@@ -84,16 +79,19 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
     }
     if(strcmp("robot/map_msgs", message->topic) == 0) {
         //download the specified map
-        if(downloadMap(msg.data)) {
+        if(downloadMap((char*)message->payload)) {
             std::cout << "error downloading map\n";
         } 
     }
     if(strcmp("robot/mapping", message->topic) == 0) {
-        if(strcmp("robot start mapping", msg.data) == 0) {
+        if(strcmp("robot start mapping", (char*)message->payload) == 0) {
             //start mapping
+            std::cout << "Map started\n";
+            startMapping();
         }    
-        if(strcmp("robot stop mapping", msg.data) == 0) {
+        if(strcmp("robot stop mapping", (char*)message->payload) == 0) {
             //stop mapping
+            stopMapping();
         }
     }
     return;
