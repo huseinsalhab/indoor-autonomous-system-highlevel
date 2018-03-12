@@ -14,6 +14,11 @@ The high level repository contains ROS code that runs on a Raspberry Pi. This de
 
 The low level repository contains C++ code that interfaces directly with the sensors and motors to control the direction of the robot and read wheel odometry and IMU data. This data is then passed back to the Raspberry Pi where it is processed by ROS. 
 
+### Dependencies
+map_server: `sudo apt-get install ros-kinetic-map-server`
+differential-drive package: `git clone https://github.com/jfstepha/differential-drive.git`
+rplidar_ros: `sudo apt-get install ros-kinetic-rplidar-ros`
+
 ### Setting Up the Workspace
 1. Clone this project.
 1. `cd` into this project and `catkin_make`
