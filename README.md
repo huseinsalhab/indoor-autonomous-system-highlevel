@@ -16,7 +16,9 @@ The low level repository contains C++ code that interfaces directly with the sen
 
 ### Dependencies
 map_server: `sudo apt-get install ros-kinetic-map-server`
+
 differential-drive package: `git clone https://github.com/jfstepha/differential-drive.git`
+
 rplidar_ros: `sudo apt-get install ros-kinetic-rplidar-ros`
 
 ### Setting Up the Workspace
