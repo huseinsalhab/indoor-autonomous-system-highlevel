@@ -46,13 +46,13 @@ int downloadMap(char* mapID) {
 
 //this function runs a shell script that starts ROS nodes used for mapping
 void startMapping() {
-    System("/home/ubuntu/indoor-autonomous-system-highlevel/src/ians_control/scripts/startMapping.sh");
+    System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/startMapping.sh");
 }
 
 
 //this function runs a shell script that stops ROS nodes used for mapping
 void stopMapping() {
-    System("/home/ubuntu/indoor-autonomous-system-highlevel/src/ians_control/scripts/stopMapping.sh");
+    System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/stopMapping.sh");
 }
 
 // this function verifies that the connection was established successfully
@@ -73,6 +73,7 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
         //toggle the motorDisable
         motorDisable ^= 1;
         std::cout << "motorDisable = " << motorDisable;
+        // publish to a topic that will toggle motorDisable variable elsewhere
     }
     if(strcmp("robot/dst", message->topic) == 0) {
         //update the destination

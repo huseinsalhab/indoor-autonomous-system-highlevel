@@ -4,7 +4,7 @@
   It requires rplidar.launch.
  -->
 <launch>
-  <!--include file="$(find ians_project)/launch/rplidar.launch" /-->
-  <include file="$(find ians_project)/mapping/launch/hectormapping.launch" />
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ians_project)/mapping/rviz/slam.rviz" />
+  <!--include file="$(find ians_mapping)/launch/rplidar.launch" /-->
+  <include file="$(find ians_mapping)/launch/hectormapping.launch" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ians_mapping)/rviz/slam.rviz" />
 </launch>

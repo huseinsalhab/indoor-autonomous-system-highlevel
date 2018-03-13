@@ -4,3 +4,4 @@ devel
 src/rplidar_ros
 src/differential_drive
 *.swp
+*.out
