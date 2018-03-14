@@ -3,9 +3,9 @@
 
 <launch>
 
-<!-- TODO: Add keyboard node -->
+<node name="keyboard" pkg="ians_control" type="keyboard_listener.py" />
 
-<!-- TODO: Add server node -->
+<node name="ians_control_server" pkg="ians_control" type="ians_control_server" />
 
 <node pkg="differential_drive" type="twist_to_motors.py" name="twist_to_motors" >
 
