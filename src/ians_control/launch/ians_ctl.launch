@@ -3,9 +3,9 @@
 
 <launch>
 
-<node name="keyboard" pkg="ians_control" type="keyboard_listener.py" />
+<include file="$(find rplidar_ros)/launch/rplidar.launch" />
 
-<node name="ians_control_server" pkg="ians_control" type="ians_control_server" />
+<node name="keyboard" pkg="ians_control" type="keyboard_listener.py" />
 
 <node pkg="differential_drive" type="twist_to_motors.py" name="twist_to_motors" >
 
@@ -53,8 +53,6 @@
     <param name="ticks_meter" value="50"/>
 
 </node>
-
-
 
 
 </launch>

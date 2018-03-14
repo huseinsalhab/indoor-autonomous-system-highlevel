@@ -14,6 +14,7 @@ def main():
     # POST map image to server
     with open(png_name, 'rb') as f:
         r = requests.post(server_ip + endpoint, files={'map.png': f})
+        print(r)
 
 if __name__ == '__main__':
     main()

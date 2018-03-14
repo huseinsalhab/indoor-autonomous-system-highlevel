@@ -1,9 +1,13 @@
 #!/bin/bash
 
-# roscore
 # source /home/ubuntu/.bashrc
- source /opt/ros/kinetic/setup.bash
- source /home/ubuntu/catkin_ws/devel/setup.bash
-# source /etc/ubuquity/env.sh
+source /opt/ros/kinetic/setup.bash
+source /home/ubuntu/indoor-autonomous-system-highlevel/devel/setup.bash
+
+# Wait for the RPLidar node to fully boot before calling stop motor
+
+roslaunch ians_control ians_ctl.launch & # Spin up Motors, Keyboard, Server 
+
+sleep 10
+rosservice call stop_motor # Stop LiDAR spinning
 # roslaunch ians_project base.launch >> ~/log 2>> ~/errorLog
-# rosrun beginner_tutorials listener.py & rosrun beginner_tutorials controller.py 
