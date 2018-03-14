@@ -3,7 +3,9 @@
 
 <launch>
 
+<!-- TODO: Add keyboard node -->
 
+<!-- TODO: Add server node -->
 
 <node pkg="differential_drive" type="twist_to_motors.py" name="twist_to_motors" >
 
