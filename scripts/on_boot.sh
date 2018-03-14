@@ -6,7 +6,9 @@ source /home/ubuntu/indoor-autonomous-system-highlevel/devel/setup.bash
 
 # Wait for the RPLidar node to fully boot before calling stop motor
 
-roslaunch ians_control ians_ctl.launch & # Spin up Motors, Keyboard, Server 
+roslaunch ians_control ians_ctl.launch & # Spin up Motors and Keyboard
+
+/home/ubuntu/indoor-autonomous-system-highlevel/src/ians_control/server_interface.out
 
 sleep 10
 rosservice call stop_motor # Stop LiDAR spinning

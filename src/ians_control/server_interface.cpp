@@ -46,13 +46,13 @@ int downloadMap(char* mapID) {
 
 //this function runs a shell script that starts ROS nodes used for mapping
 void startMapping() {
-    System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/startMapping.sh");
+    System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/start_mapping.sh");
 }
 
 
 //this function runs a shell script that stops ROS nodes used for mapping
 void stopMapping() {
-    System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/stopMapping.sh");
+    System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh");
 }
 
 // this function verifies that the connection was established successfully
