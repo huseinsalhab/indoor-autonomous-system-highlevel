@@ -26,6 +26,7 @@ rplidar_ros: `sudo apt-get install ros-kinetic-rplidar-ros`
 1. `cd` into this project and `catkin_make`
 1. `cd` into devel, and `source setup.bash`
 1. `rosrun beginner_tutorials <module.py>`
+1. Add `@/home/ubuntu/indoor-autonomous-system-highlevel/scripts/on_boot.sh` to  `~/.config/lxsession/Lubuntu/autostart`
 
 ### Coding Standards Doc
 
