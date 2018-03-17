@@ -61,8 +61,7 @@ class KeyboardListener(object):
                     sys.exit()
 
 def keyboard_event_publisher():
-    """ Listens for keyboard events and publishes them to the specified topic
-    """
+    """Listens for keyboard events and publishes them to the specified topic"""
     key_capture = KeyboardListener()
 
     right_pub = rospy.Publisher('rmotor', Float32, queue_size = 10)
