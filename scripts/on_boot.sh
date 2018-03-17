@@ -8,5 +8,7 @@ roslaunch ians_control ians_ctl.launch & # Spin up Motors and Keyboard
 
 /home/ubuntu/indoor-autonomous-system-highlevel/src/ians_control/server_interface.out &
 
+rosrun rosserial_python serial_node.py /dev/ttyACM0 # Connect to Teensy
+
 sleep 7 # Wait for the RPLidar node to fully boot before calling stop motor
 rosservice call stop_motor # Stop LiDAR spinning
