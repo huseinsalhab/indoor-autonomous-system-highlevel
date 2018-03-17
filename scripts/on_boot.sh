@@ -4,6 +4,8 @@
 source /opt/ros/kinetic/setup.bash
 source /home/ubuntu/indoor-autonomous-system-highlevel/devel/setup.bash
 
+exit 0 # Uncomment this line to put the device in manual testing mode
+
 roslaunch ians_control ians_ctl.launch & # Spin up Motors and Keyboard
 
 /home/ubuntu/indoor-autonomous-system-highlevel/src/ians_control/server_interface.out &
