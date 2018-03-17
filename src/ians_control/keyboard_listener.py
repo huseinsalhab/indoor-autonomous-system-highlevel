@@ -1,53 +1,60 @@
 #! /usr/bin/env python
-# -*- coding: utf-8 -*-
-#
-# This file presents an interface for interacting with the Playstation 4 Controller
-# in Python. Simply plug your PS4 controller into your computer using USB and run this
-# script!
-#
-# NOTE: I assume in this script that the only joystick plugged in is the PS4 controller.
-#       if this is not the case, you will need to change the class accordingly.
-#
-# Copyright © 2015 Clay L. McLeod <clay.l.mcleod@gmail.com>
-#
-# Distributed under terms of the MIT license.
+
+# File used to record keyboard events on a Raspberry Pi and 
+# publish accordingly to a ROS topic
 
 import sys
 import rospy
-from std_msgs.msg import String
+from std_msgs.msg import Float32 
 import pygame
-from collections import defaultdict
 
 class KeyboardListener(object):
     """Class representing the keyboard listener."""
 
     def __init__(self):
-        """Initialize the joystick components"""
+        """Initialize pygame"""
         pygame.init()
         pygame.display.set_caption(u'Keyboard events')
         pygame.display.set_mode((400, 400))
 
-    def listen(self, callback):
+    def listen(self, r_callback, l_callback):
         """Listen for events to happen and passes the pressed character
         + an indicator of key press vs key release into the callback function"""
+        fwd_speed = 75.0
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     try:
                         real_char = chr(event.key)
-                        pub_str = 'd' + real_char
-                        callback(pub_str)
+                        if real_char == 'w':
+                            # Publish L + R fwd
+                            r_callback(fwd_speed)
+                            l_callback(fwd_speed)
+                        if real_char == 's':
+                            # Publish L + R back 
+                            r_callback(fwd_speed * -1)
+                            l_callback(fwd_speed * -1)
+                        if real_char == 'd':
+                            # Turn right
+                            r_callback(fwd_speed * -1)
+                            l_callback(fwd_speed)
+                        if real_char == 'a':
+                            # Turn left
+                            r_callback(fwd_speed)
+                            l_callback(fwd_speed * -1)
+                        if real_char == 'x':
+                            # Emergency brake 
+                            r_callback(0)
+                            l_callback(0)
                     except:
                         pass
-
                 elif event.type == pygame.KEYUP:
                     try:
-                        real_char = chr(event.key)
-                        pub_str = 'u' + real_char
-                        callback(pub_str)
+                        # Turn off all motors if keys are released
+                        r_callback(0)
+                        l_callback(0)
                     except:
                         pass
-
                 elif event.type == pygame.QUIT:
                     pygame.display.quit()
                     pygame.quit()
@@ -58,12 +65,13 @@ def keyboard_event_publisher():
     """
     key_capture = KeyboardListener()
 
-    pub = rospy.Publisher('car_command', String, queue_size = 10)
+    right_pub = rospy.Publisher('rmotor', Float32, queue_size = 10)
+    left_pub = rospy.Publisher('lmotor', Float32, queue_size = 10)
     rospy.init_node('keyboard_event_publisher', anonymous=True)
     rate = rospy.Rate(10)
 
     while not rospy.is_shutdown():
-       key_capture.listen(pub.publish)
+       key_capture.listen(right_pub.publish, left_pub.publish)
        rate.sleep()
 
 if __name__ == '__main__':
