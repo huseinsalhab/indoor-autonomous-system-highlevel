@@ -27,7 +27,10 @@ class KeyboardListener(object):
         ## Get any new events before publishing to ROS
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                self.last_char = chr(event.key)
+                try:
+                    last_char = chr(event.key)
+                except:
+                    pass
             elif event.type == pygame.KEYUP:
                 self.last_char = ''
             elif event.type == pygame.QUIT:
