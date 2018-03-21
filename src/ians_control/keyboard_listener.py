@@ -28,7 +28,7 @@ class KeyboardListener(object):
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 try:
-                    last_char = chr(event.key)
+                    self.last_char = chr(event.key)
                 except:
                     pass
             elif event.type == pygame.KEYUP:
@@ -41,18 +41,24 @@ class KeyboardListener(object):
         msg = Twist()
         if self.last_char == 'w':
             # Drive forward
-            msg.linear.x = 10
-        if self.last_char == 's':
+            msg.linear.x = 5 
+            callback(msg)
+        elif self.last_char == 's':
             # Drive backward
-            msg.linear.x = -10
-        if self.last_char == 'd':
+            msg.linear.x = -5
+            callback(msg)
+        elif self.last_char == 'd':
             # Turn right
-            msg.angular.z = -50
-        if self.last_char == 'a':
+            msg.angular.z = -25
+            callback(msg)
+        
+        elif self.last_char == 'a':
             # Turn left
-            msg.angular.z = 50
+            msg.angular.z = 25 
+            callback(msg)    
+        else:
+            pass
         # Publish the message after creating the struct
-        callback(msg)    
                                                    
 def keyboard_event_publisher():
     """Listens for keyboard events and publishes them to the specified topic"""
