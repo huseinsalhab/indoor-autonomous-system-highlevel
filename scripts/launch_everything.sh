@@ -7,7 +7,7 @@ source /home/ubuntu/indoor-autonomous-system-highlevel/devel/setup.bash
 
 roslaunch ians_control ians_ctl.launch & # Spin up Motors and Keyboard
 
-/home/ubuntu/indoor-autonomous-system-highlevel/src/ians_control/server_interface.out &
+# /home/ubuntu/indoor-autonomous-system-highlevel/src/ians_control/server_interface.out &
 
 rosrun rosserial_python serial_node.py /dev/ttyACM0 & # Connect to Teensy
 
