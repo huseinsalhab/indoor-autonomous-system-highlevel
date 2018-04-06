@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-# File used to record keyboard events on a Raspberry Pi and 
+# File used to record keyboard events on a Raspberry Pi and
 # publish accordingly to a ROS topic
 
 import sys
@@ -8,58 +8,56 @@ import rospy
 from std_msgs.msg import Float32
 from geometry_msgs.msg import Twist
 import pygame
+from collections import defaultdict
 
 
 class KeyboardListener(object):
-    """Class representing the keyboard listener."""
+    """Class representing a keyboard listener"""
 
     def __init__(self):
-        """Initialize pygame"""
         pygame.init()
         pygame.display.set_caption(u'Keyboard events')
         pygame.display.set_mode((400, 400))
-        self.last_char = ''
+        self.keys = defaultdict(bool)
+
+    def check_key(self, key, direction):
+        """Sets the dict based on what key is currently pressed
+        Ignores any non-ASCII keys (e.g. arrow keys)"""
+        try:
+            char = chr(key)
+        except:
+            return
+        self.keys[char] = direction
+
+    def build_message():
+        msg = Twist()
+        if self.keys['w']: # Forward
+            msg.linear.x = 5
+        if self.keys['s']: # Back up
+            msg.linear.x = -5
+        if self.last_char == 'd': # Turn right
+            msg.angular.z = -25
+        if self.last_char == 'a': # Turn left
+            msg.angular.z = 25
+        return msg
 
     def listen(self, callback):
         """Listen for events to happen and passes the pressed character
         + an indicator of key press vs key release into the callback function"""
-        
-        ## Get any new events before publishing to ROS
+
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                try:
-                    self.last_char = chr(event.key)
-                except:
-                    pass
+                self.check_key(event.key, True)
             elif event.type == pygame.KEYUP:
-                self.last_char = ''
+                self.check_key(event.key, False)
             elif event.type == pygame.QUIT:
                 pygame.display.quit()
                 pygame.quit()
                 sys.exit()
-        ## Publish to geo twist topic based on whatever key was last pressed
-        msg = Twist()
-        if self.last_char == 'w':
-            # Drive forward
-            msg.linear.x = 5 
+
+            msg = build_message()
             callback(msg)
-        elif self.last_char == 's':
-            # Drive backward
-            msg.linear.x = -5
-            callback(msg)
-        elif self.last_char == 'd':
-            # Turn right
-            msg.angular.z = -25
-            callback(msg)
-        
-        elif self.last_char == 'a':
-            # Turn left
-            msg.angular.z = 25 
-            callback(msg)    
-        else:
-            pass
-        # Publish the message after creating the struct
-                                                   
+
 def keyboard_event_publisher():
     """Listens for keyboard events and publishes them to the specified topic"""
     key_capture = KeyboardListener()
