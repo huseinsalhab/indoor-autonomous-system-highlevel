@@ -8,11 +8,12 @@
 <node name="keyboard" pkg="ians_control" type="keyboard_listener.py" />
 
 <param name="ticks_meter" value="1527.88"/> <!--number of encoder ticks in one meter. depends on wheel size-->
+<!--param name="vel_threshold" value="1.0"/-->
 
 <node pkg="differential_drive" type="twist_to_motors.py" name="twist_to_motors" >
 
     <remap from="twist" to="cmd_vel"/>
-
+    <param name="rate" value="5"/>
     <param name="base_width" value="0.317"/> 
     <!--width between two wheels redo param correctly here-->
 
@@ -23,6 +24,7 @@
 <node pkg="differential_drive" type="diff_tf.py" name="diff_tf">
 
     <param name="base_width" value = "0.317"/>
+    
     <!-- param name="encoder_min, value="-32768" --> <!-- min val of int16 from teensy encoder ticks-->
     <!-- param name="encoder_max", value="32768" --> 
 
@@ -31,6 +33,12 @@
 
 <!-- for Right motor -->
 <node pkg="differential_drive" type="pid_velocity.py" name="pid_velocity_rightmotor">
+
+    <param name="Kd" value="0.01"/>
+    <param name="Kp" value="200.0"/>
+    <param name="Ki" value="10.0"/>
+
+    <param name="timeout_ticks" value="40"/>
 
     <remap from="motor_cmd" to="rmotor"/>
     <remap from="wheel_vel" to="rwheel_vel"/>
@@ -43,6 +51,10 @@
 
 <!-- for left motor -->
 <node pkg="differential_drive" type="pid_velocity.py" name="pid_velocity_leftmotor">
+    <param name="Kd" value="0.01"/>
+    <param name="Kp" value="200.0"/>
+    <param name="Ki" value="10.0"/>
+    <param name="timeout_ticks" value="40"/>
 
     <remap from="motor_cmd" to="lmotor"/>
     <remap from="wheel_vel" to="lwheel_vel"/>

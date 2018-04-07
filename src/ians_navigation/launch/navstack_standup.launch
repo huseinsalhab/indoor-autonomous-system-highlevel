@@ -1,8 +1,8 @@
 <launch>
 
 	<!-- Standup map server -->
-	<arg name="map_file" default="$(find ians_mapping)/maps_baskin/baskin_1.yaml"/>
-	<node name="map_server" pkg="map_server" type="map_server" args"$(arg map_file)"/>
+	<!--arg name="map_file" default="$(find ians_mapping)/maps_baskin/baskin_1.yaml"/-->
+	<!--node name="map_server" pkg="map_server" type="map_server" args"$(arg map_file)"/-->
 
 	<!-- dont need next line. if bugs come up, uncomment next line, and change global_costmap_param to odom frame-->
 	<!--
@@ -19,4 +19,21 @@
 		<param name="update_min_a" value="0.523"/> <!-- rot mov req before filter update, default 0.523-->
 	</node>
 
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <param name="planner_frequency" value="0.0"/>
+        <param name="controller_frequency" value="15.0"/>
+        <rosparam file="$(find ians_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find ians_navigation)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find ians_navigation)/config/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find ians_navigation)/config/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find ians_navigation)/config/base_local_planner_params.yaml" command="load"/>
+        
+        <remap from="cmd_vel" to="cmd_vel"/>
+        <remap from="odom" to="odom"/>
+        <remap from="scan" to="/scan"/>
+        <param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="1.0"/>
+        <param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="1.0"/>
+   </node>
 
+
+</launch>
