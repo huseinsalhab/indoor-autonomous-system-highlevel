@@ -29,16 +29,16 @@ class KeyboardListener(object):
             return
         self.keys[char] = direction
 
-    def build_message():
+    def build_message(self):
         msg = Twist()
         if self.keys['w']: # Forward
-            msg.linear.x = 5
+            msg.linear.x = 1 
         if self.keys['s']: # Back up
-            msg.linear.x = -5
-        if self.last_char == 'd': # Turn right
-            msg.angular.z = -25
-        if self.last_char == 'a': # Turn left
-            msg.angular.z = 25
+            msg.linear.x = -1
+        if self.keys['d']: # Turn right
+            msg.angular.z = -4
+        if self.keys['a']: # Turn left
+            msg.angular.z = 4 
         return msg
 
     def listen(self, callback):
@@ -55,8 +55,8 @@ class KeyboardListener(object):
                 pygame.quit()
                 sys.exit()
 
-            msg = build_message()
-            callback(msg)
+        msg = self.build_message()
+        callback(msg)
 
 def keyboard_event_publisher():
     """Listens for keyboard events and publishes them to the specified topic"""
@@ -64,7 +64,7 @@ def keyboard_event_publisher():
 
     geo_twist_pub = rospy.Publisher('cmd_vel', Twist, queue_size = 10)
     rospy.init_node('keyboard_event_publisher', anonymous=True)
-    rate = rospy.Rate(50)
+    rate = rospy.Rate(5)
 
     while not rospy.is_shutdown():
        key_capture.listen(geo_twist_pub.publish)
