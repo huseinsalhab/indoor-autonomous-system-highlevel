@@ -39,6 +39,7 @@
     <param name="Ki" value="10.0"/>
 
     <param name="timeout_ticks" value="40"/>
+    <param name="rolling_pts" value="5"/>
 
     <remap from="motor_cmd" to="rmotor"/>
     <remap from="wheel_vel" to="rwheel_vel"/>
@@ -55,6 +56,7 @@
     <param name="Kp" value="200.0"/>
     <param name="Ki" value="10.0"/>
     <param name="timeout_ticks" value="40"/>
+    <param name="rolling_pts" value="5"/>
 
     <remap from="motor_cmd" to="lmotor"/>
     <remap from="wheel_vel" to="lwheel_vel"/>

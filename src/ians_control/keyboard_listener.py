@@ -32,9 +32,9 @@ class KeyboardListener(object):
     def build_message(self):
         msg = Twist()
         if self.keys['w']: # Forward
-            msg.linear.x = 1 
+            msg.linear.x = 0.5 # m/s
         if self.keys['s']: # Back up
-            msg.linear.x = -1
+            msg.linear.x = -0.5
         if self.keys['d']: # Turn right
             msg.angular.z = -4
         if self.keys['a']: # Turn left
