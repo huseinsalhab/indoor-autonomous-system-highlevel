@@ -3,7 +3,7 @@ raytrace_range: 3.0
 
 robot_radius: 0.2 # distance a circular robot should be clear of obstacle
 
-inflation_radius: 3.0
+inflation_radius: 0.2 
 
 observation_sources: laser_scan_sensor #laser scan
 

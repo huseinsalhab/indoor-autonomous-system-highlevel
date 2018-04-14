@@ -5,9 +5,10 @@
 	<!--node name="map_server" pkg="map_server" type="map_server" args"$(arg map_file)"/-->
 
 	<!-- dont need next line. if bugs come up, uncomment next line, and change global_costmap_param to odom frame-->
-	<!--
-		<node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 map odom 100"/>
-	-->
+		
+    <node pkg="tf" type="static_transform_publisher" name="laser_baselink_broadcaster" args="0 0 0 0 0 0 base_link laser 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="scan_baselink_broadcaster" args="0 0 0 0 0 0 base_link scan 100"/>
+
 
 	<!-- Standup Localization -->
   	<node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
