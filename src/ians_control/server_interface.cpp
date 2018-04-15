@@ -32,7 +32,7 @@ int System(const char* command) {
 }
 
 //this function handles downloading a map from the server
-int downloadMap(char* mapID) {
+int donwload_map(char* mapID) {
     /* functionality for multiple maps is a future feature
     char cmd[cmd_len];
     if(strcpy(cmd, "curl ") == null)
@@ -40,19 +40,24 @@ int downloadMap(char* mapID) {
     if(strcat(cmd, mapID) == null)
         return -1;
     */
-    char* cmd = "curl http://35.229.88.91/v1/map.png";
+    const char* cmd = "curl http://35.229.88.91/v1/map.png";
     return System(cmd);
 }
 
 //this function runs a shell script that starts ROS nodes used for mapping
-void startMapping() {
+void start_mapping() {
     System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/start_mapping.sh");
 }
 
 
 //this function runs a shell script that stops ROS nodes used for mapping
-void stopMapping() {
+void stop_mapping() {
     System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh");
+}
+
+//this function runs a shell script that sends the input arguments to move_base goal
+void set_nav_goal(const char* x_val, const char* y_val) {
+    System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh");
 }
 
 // this function verifies that the connection was established successfully
@@ -77,10 +82,14 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
     }
     if(strcmp("robot/dst", message->topic) == 0) {
         //update the destination
+        //destination messages are of format "x_val y_val"
+        const char* x_val = strtok((char*)message->payload, " ");
+        const char* y_val = strtok(NULL, " ");
+        set_nav_goal(x_val, y_val);
     }
     if(strcmp("robot/map_msgs", message->topic) == 0) {
         //download the specified map
-        if(downloadMap((char*)message->payload)) {
+        if(donwload_map((char*)message->payload)) {
             std::cout << "error downloading map\n";
         } 
     }
@@ -88,11 +97,11 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
         if(strcmp("robot start mapping", (char*)message->payload) == 0) {
             //start mapping
             std::cout << "Map started\n";
-            startMapping();
+            start_mapping();
         }    
         if(strcmp("robot stop mapping", (char*)message->payload) == 0) {
             //stop mapping
-            stopMapping();
+            stop_mapping();
         }
     }
     return;
