@@ -8,6 +8,12 @@
 #define queue_length 32 
 #define cmd_len 256
 
+// define paths of shell scripts called 
+#define START_MAPPING_PATH "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/start_mapping.sh"
+#define STOP_MAPPING_PATH "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh"
+#define SET_NAV_GOAL_PATH "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh"
+
+
 /* AUTHOR: Kyle Ebding
 
    This program runs a ROS node server-to-robot_mqtt_bridge that takes
@@ -46,18 +52,18 @@ int donwload_map(char* mapID) {
 
 //this function runs a shell script that starts ROS nodes used for mapping
 void start_mapping() {
-    System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/start_mapping.sh");
+    System(START_MAPPING_PATH);
 }
 
 
 //this function runs a shell script that stops ROS nodes used for mapping
 void stop_mapping() {
-    System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh");
+    System(STOP_MAPPING_PATH);
 }
 
 //this function runs a shell script that sends the input arguments to move_base goal
 void set_nav_goal(const char* x_val, const char* y_val) {
-    System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh");
+    System(SET_NAV_GOAL_PATH);
 }
 
 // this function verifies that the connection was established successfully
