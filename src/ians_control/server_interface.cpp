@@ -5,13 +5,14 @@
 #include <string.h>
 #include <iostream>
 
-#define queue_length 32 
-#define cmd_len 256
+#define QUEUE_LENGTH 32 
+#define CMD_LEN 256
+#define SERVER_ADDR "35.197.98.244"
 
 // define paths of shell scripts called 
-#define START_MAPPING_PATH "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/start_mapping.sh"
-#define STOP_MAPPING_PATH "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh"
-#define SET_NAV_GOAL_PATH "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh"
+#define START_MAPPING_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/start_mapping.sh"
+#define STOP_MAPPING_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh"
+#define SET_NAV_GOAL_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh"
 
 
 /* AUTHOR: Kyle Ebding
@@ -40,7 +41,7 @@ int System(const char* command) {
 //this function handles downloading a map from the server
 int donwload_map(char* mapID) {
     /* functionality for multiple maps is a future feature
-    char cmd[cmd_len];
+    char cmd[CMD_LEN];
     if(strcpy(cmd, "curl ") == null)
         return -1;
     if(strcat(cmd, mapID) == null)
@@ -52,18 +53,20 @@ int donwload_map(char* mapID) {
 
 //this function runs a shell script that starts ROS nodes used for mapping
 void start_mapping() {
-    System(START_MAPPING_PATH);
+    System(START_MAPPING_SCRIPT);
 }
 
 
 //this function runs a shell script that stops ROS nodes used for mapping
 void stop_mapping() {
-    System(STOP_MAPPING_PATH);
+    System(STOP_MAPPING_SCRIPT);
 }
 
 //this function runs a shell script that sends the input arguments to move_base goal
 void set_nav_goal(const char* x_val, const char* y_val) {
-    System(SET_NAV_GOAL_PATH);
+    char cmd_str[CMD_LEN];
+    sprintf(cmd_str, "%s %s %s", SET_NAV_GOAL_SCRIPT, x_val, y_val);
+    System(cmd_str);
 }
 
 // this function verifies that the connection was established successfully
@@ -130,7 +133,7 @@ int main(int argc, char **argv) {
     mosquitto_message_callback_set(mosq, message_callback);
 
     // Mosquttio Struct, Server IP, Port, Keep Alive Timer (seconds)
-    if(mosquitto_connect(mosq, "35.229.88.91", 1883, 60)) {
+    if(mosquitto_connect(mosq, SERVER_ADDR, 1883, 60)) {
         printf("error connecting\n");
         return(-1);
     }
