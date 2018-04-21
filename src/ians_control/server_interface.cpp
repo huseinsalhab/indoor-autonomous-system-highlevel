@@ -10,9 +10,10 @@
 #define SERVER_ADDR "35.197.98.244"
 
 // define paths of shell scripts called 
-#define START_MAPPING_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/start_mapping.sh"
-#define STOP_MAPPING_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh"
-#define SET_NAV_GOAL_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh"
+#define START_MAPPING_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/start_mapping.sh"
+#define STOP_MAPPING_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh"
+#define SET_NAV_GOAL_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh"
+#define SET_INITIAL_POSE_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_initial_pose.sh"
 
 
 /* AUTHOR: Kyle Ebding
@@ -26,8 +27,8 @@
    make sure to use the argument "-l mosquitto" to link the Mosquitto library
 */
 
-//motorDisable is a global variable that controls whether the robot may move
-uint8_t motorDisable = 0;
+//motor_disable is a global variable that controls whether the robot may move
+uint8_t motor_disable = 0;
 
 //this function is a wrapper for system() that includes error checking
 int System(const char* command) {
@@ -62,10 +63,17 @@ void stop_mapping() {
     System(STOP_MAPPING_SCRIPT);
 }
 
-//this function runs a shell script that sends the input arguments to move_base goal
+//this function runs a shell script that sends the input arguments to /move_base_simple/goal
 void set_nav_goal(const char* x_val, const char* y_val) {
     char cmd_str[CMD_LEN];
     sprintf(cmd_str, "%s %s %s", SET_NAV_GOAL_SCRIPT, x_val, y_val);
+    System(cmd_str);
+}
+
+//this functions runns a shell script that sends the input arguments to /initialpose
+void set_initial_pose(const char* x_val, const char* y_val, const char* facing) {
+    char cmd_str[CMD_LEN];
+    sprintf(cmd_str, "%s %s %s", SET_INITIAL_POSE_SCRIPT, x_val, y_val, facing);
     System(cmd_str);
 }
 
@@ -83,11 +91,11 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
         
 
     // check expected topics. if there's a match, publish to that topic
-    if(strcmp("robot/motorDisable", message->topic) == 0) {
-        //toggle the motorDisable
-        motorDisable ^= 1;
-        std::cout << "motorDisable = " << motorDisable;
-        // publish to a topic that will toggle motorDisable variable elsewhere
+    if(strcmp("robot/motor_disable", message->topic) == 0) {
+        //toggle the motor_disable
+        motor_disable ^= 1;
+        std::cout << "motor_disable = " << motor_disable;
+        // publish to a topic that will toggle motor_disable variable elsewhere
     }
     if(strcmp("robot/dst", message->topic) == 0) {
         //update the destination
@@ -95,6 +103,14 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
         const char* x_val = strtok((char*)message->payload, " ");
         const char* y_val = strtok(NULL, " ");
         set_nav_goal(x_val, y_val);
+    }
+    if(strcmp("robot/set_initial_pose", message->topic) == 0) {
+        //send initial pose to robot
+        //only values we care about are x position, y position, and facing
+        const char* x_val = strtok((char*)message->payload, " ");
+        const char* y_val = strtok(NULL, " ");
+        const char* facing = strtok(NULL, " ");
+        set_initial_pose(x_val, y_val, facing);
     }
     if(strcmp("robot/map_msgs", message->topic) == 0) {
         //download the specified map
@@ -113,6 +129,7 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
             stop_mapping();
         }
     }
+
     return;
 }
 
@@ -138,10 +155,11 @@ int main(int argc, char **argv) {
         return(-1);
     }
 
-    mosquitto_subscribe(mosq, NULL, "robot/motorDisable", 0);
+    mosquitto_subscribe(mosq, NULL, "robot/motor_disable", 0);
     mosquitto_subscribe(mosq, NULL, "robot/dst", 0);
     mosquitto_subscribe(mosq, NULL, "robot/map_msgs", 0);
     mosquitto_subscribe(mosq, NULL, "robot/mapping", 0);
+    mosquitto_subscribe(mosq, NULL, "robot/initial_pose", 0);
 
     // run an infinite loop that listens for messages and processes them
     mosquitto_loop_forever(mosq, -1, 1);
