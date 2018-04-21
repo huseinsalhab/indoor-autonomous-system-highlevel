@@ -5,8 +5,16 @@
 #include <string.h>
 #include <iostream>
 
-#define queue_length 32 
-#define cmd_len 256
+#define QUEUE_LENGTH 32 
+#define CMD_LEN 256
+#define SERVER_ADDR "35.197.98.244"
+
+// define paths of shell scripts called 
+#define START_MAPPING_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/start_mapping.sh"
+#define STOP_MAPPING_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh"
+#define SET_NAV_GOAL_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh"
+#define SET_INITIAL_POSE_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_initial_pose.sh"
+
 
 /* AUTHOR: Kyle Ebding
 
@@ -19,8 +27,8 @@
    make sure to use the argument "-l mosquitto" to link the Mosquitto library
 */
 
-//motorDisable is a global variable that controls whether the robot may move
-uint8_t motorDisable = 0;
+//motor_disable is a global variable that controls whether the robot may move
+uint8_t motor_disable = 0;
 
 //this function is a wrapper for system() that includes error checking
 int System(const char* command) {
@@ -32,27 +40,41 @@ int System(const char* command) {
 }
 
 //this function handles downloading a map from the server
-int downloadMap(char* mapID) {
+int donwload_map(char* mapID) {
     /* functionality for multiple maps is a future feature
-    char cmd[cmd_len];
+    char cmd[CMD_LEN];
     if(strcpy(cmd, "curl ") == null)
         return -1;
     if(strcat(cmd, mapID) == null)
         return -1;
     */
-    char* cmd = "curl http://35.229.88.91/v1/map.png";
+    const char* cmd = "curl http://35.229.88.91/v1/map.png";
     return System(cmd);
 }
 
 //this function runs a shell script that starts ROS nodes used for mapping
-void startMapping() {
-    System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/start_mapping.sh");
+void start_mapping() {
+    System(START_MAPPING_SCRIPT);
 }
 
 
 //this function runs a shell script that stops ROS nodes used for mapping
-void stopMapping() {
-    System("/home/ubuntu/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh");
+void stop_mapping() {
+    System(STOP_MAPPING_SCRIPT);
+}
+
+//this function runs a shell script that sends the input arguments to /move_base_simple/goal
+void set_nav_goal(const char* x_val, const char* y_val) {
+    char cmd_str[CMD_LEN];
+    sprintf(cmd_str, "%s %s %s", SET_NAV_GOAL_SCRIPT, x_val, y_val);
+    System(cmd_str);
+}
+
+//this functions runns a shell script that sends the input arguments to /initialpose
+void set_initial_pose(const char* x_val, const char* y_val, const char* facing) {
+    char cmd_str[CMD_LEN];
+    sprintf(cmd_str, "%s %s %s", SET_INITIAL_POSE_SCRIPT, x_val, y_val, facing);
+    System(cmd_str);
 }
 
 // this function verifies that the connection was established successfully
@@ -69,18 +91,30 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
         
 
     // check expected topics. if there's a match, publish to that topic
-    if(strcmp("robot/motorDisable", message->topic) == 0) {
-        //toggle the motorDisable
-        motorDisable ^= 1;
-        std::cout << "motorDisable = " << motorDisable;
-        // publish to a topic that will toggle motorDisable variable elsewhere
+    if(strcmp("robot/motor_disable", message->topic) == 0) {
+        //toggle the motor_disable
+        motor_disable ^= 1;
+        std::cout << "motor_disable = " << motor_disable;
+        // publish to a topic that will toggle motor_disable variable elsewhere
     }
     if(strcmp("robot/dst", message->topic) == 0) {
         //update the destination
+        //destination messages are of format "x_val y_val"
+        const char* x_val = strtok((char*)message->payload, " ");
+        const char* y_val = strtok(NULL, " ");
+        set_nav_goal(x_val, y_val);
+    }
+    if(strcmp("robot/set_initial_pose", message->topic) == 0) {
+        //send initial pose to robot
+        //only values we care about are x position, y position, and facing
+        const char* x_val = strtok((char*)message->payload, " ");
+        const char* y_val = strtok(NULL, " ");
+        const char* facing = strtok(NULL, " ");
+        set_initial_pose(x_val, y_val, facing);
     }
     if(strcmp("robot/map_msgs", message->topic) == 0) {
         //download the specified map
-        if(downloadMap((char*)message->payload)) {
+        if(donwload_map((char*)message->payload)) {
             std::cout << "error downloading map\n";
         } 
     }
@@ -88,13 +122,14 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
         if(strcmp("robot start mapping", (char*)message->payload) == 0) {
             //start mapping
             std::cout << "Map started\n";
-            startMapping();
+            start_mapping();
         }    
         if(strcmp("robot stop mapping", (char*)message->payload) == 0) {
             //stop mapping
-            stopMapping();
+            stop_mapping();
         }
     }
+
     return;
 }
 
@@ -115,15 +150,16 @@ int main(int argc, char **argv) {
     mosquitto_message_callback_set(mosq, message_callback);
 
     // Mosquttio Struct, Server IP, Port, Keep Alive Timer (seconds)
-    if(mosquitto_connect(mosq, "35.229.88.91", 1883, 60)) {
+    if(mosquitto_connect(mosq, SERVER_ADDR, 1883, 60)) {
         printf("error connecting\n");
         return(-1);
     }
 
-    mosquitto_subscribe(mosq, NULL, "robot/motorDisable", 0);
+    mosquitto_subscribe(mosq, NULL, "robot/motor_disable", 0);
     mosquitto_subscribe(mosq, NULL, "robot/dst", 0);
     mosquitto_subscribe(mosq, NULL, "robot/map_msgs", 0);
     mosquitto_subscribe(mosq, NULL, "robot/mapping", 0);
+    mosquitto_subscribe(mosq, NULL, "robot/initial_pose", 0);
 
     // run an infinite loop that listens for messages and processes them
     mosquitto_loop_forever(mosq, -1, 1);
