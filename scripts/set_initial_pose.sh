@@ -14,7 +14,7 @@ fi
 
 # source ROS setup files to make sure ROS environment is correct
 source /opt/ros/kinetic/setup.bash
-source /home/kyle/ians/indoor-autonomous-system-highlevel/devel/setup.bash
+source /home/ubuntu/indoor-autonomous-system-highlevel/devel/setup.bash
 
 #rosrun ians_control set_nav_goal $1 $2
 
