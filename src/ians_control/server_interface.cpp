@@ -10,10 +10,10 @@
 #define SERVER_ADDR "35.197.98.244"
 
 // define paths of shell scripts called 
-#define START_MAPPING_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/start_mapping.sh"
-#define STOP_MAPPING_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh"
-#define SET_NAV_GOAL_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh"
-#define SET_INITIAL_POSE_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_initial_pose.sh"
+#define START_MAPPING_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/start_mapping.sh"
+#define STOP_MAPPING_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh"
+#define SET_NAV_GOAL_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh"
+#define SET_INITIAL_POSE_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/set_initial_pose.sh"
 
 
 /* AUTHOR: Kyle Ebding
@@ -73,7 +73,8 @@ void set_nav_goal(const char* x_val, const char* y_val) {
 //this functions runns a shell script that sends the input arguments to /initialpose
 void set_initial_pose(const char* x_val, const char* y_val, const char* facing) {
     char cmd_str[CMD_LEN];
-    sprintf(cmd_str, "%s %s %s", SET_INITIAL_POSE_SCRIPT, x_val, y_val, facing);
+    sprintf(cmd_str, "%s %s %s %s", SET_INITIAL_POSE_SCRIPT, x_val, y_val, 
+            facing);
     System(cmd_str);
 }
 
@@ -104,7 +105,7 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
         const char* y_val = strtok(NULL, " ");
         set_nav_goal(x_val, y_val);
     }
-    if(strcmp("robot/set_initial_pose", message->topic) == 0) {
+    if(strcmp("robot/initial_pose", message->topic) == 0) {
         //send initial pose to robot
         //only values we care about are x position, y position, and facing
         const char* x_val = strtok((char*)message->payload, " ");
