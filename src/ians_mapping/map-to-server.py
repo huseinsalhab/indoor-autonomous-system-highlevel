@@ -2,7 +2,7 @@
 import requests
 from subprocess import call
 
-server_ip = 'http://35.229.88.91'
+server_ip = 'http://35.197.98.244'
 endpoint = '/v1/robot_receive_map'
 
 png_name = '/home/ubuntu/indoor-autonomous-system-highlevel/src/ians_mapping/map.png'
