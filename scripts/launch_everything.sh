@@ -5,7 +5,8 @@
 source /opt/ros/kinetic/setup.bash
 source /home/ubuntu/indoor-autonomous-system-highlevel/devel/setup.bash
 
-roslaunch ians_control ians_ctl.launch & # Spin up Motors and Keyboard
+# roslaunch ians_control ians_ctl.launch & # Spin up Motors and Keyboard
+roslaunch ians_control ians_ctl_lowlevelPID.launch & # Spin up Motors and Keyboard
 
 # /home/ubuntu/indoor-autonomous-system-highlevel/src/ians_control/server_interface.out &
 

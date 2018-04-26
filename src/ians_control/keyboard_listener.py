@@ -10,7 +10,7 @@ from geometry_msgs.msg import Twist
 import pygame
 from collections import defaultdict
 
-vel = .15
+vel = .3
 theta = 2
 
 class KeyboardListener(object):

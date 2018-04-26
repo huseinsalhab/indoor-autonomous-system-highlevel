@@ -32,40 +32,6 @@
 </node>
 
  
-<!-- for Right motor -->
-<node pkg="differential_drive" type="pid_velocity.py" name="pid_velocity_rightmotor">
-
-    <param name="Kd" value="0.01"/>
-    <param name="Kp" value="400"/>
-    <param name="Ki" value="100"/>
-
-    <param name="timeout_ticks" value="40"/>
-
-    <param name="rolling_pts" value="10"/>
-    <remap from="motor_cmd" to="rmotor"/>
-    <remap from="wheel_vel" to="rwheel_vel"/>
-
-    <remap from="wheel" to="rwheel"/>
-    <remap from="wheel_vtarget" to="rwheel_vtarget"/>
-
-
-</node>
-
-<!-- for left motor -->
-<node pkg="differential_drive" type="pid_velocity.py" name="pid_velocity_leftmotor">
-    <param name="Kd" value="0.01"/>
-    <param name="Kp" value="400"/>
-    <param name="Ki" value="100"/>
-    <param name="timeout_ticks" value="40"/>
-
-    <param name="rolling_pts" value="10"/>
-    <remap from="motor_cmd" to="lmotor"/>
-    <remap from="wheel_vel" to="lwheel_vel"/>
-
-    <remap from="wheel" to="lwheel"/>
-    <remap from="wheel_vtarget" to="lwheel_vtarget"/> 
-</node>
-
 </launch>
 
 
