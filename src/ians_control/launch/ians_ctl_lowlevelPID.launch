@@ -13,7 +13,7 @@
 <node pkg="differential_drive" type="twist_to_motors.py" name="twist_to_motors" >
 
     <remap from="twist" to="cmd_vel"/>
-    <param name="rate" value="5"/>
+    <param name="rate" value="10"/>
     <param name="base_width" value="0.317"/> 
     <!--width between two wheels redo param correctly here-->
 
