@@ -40,7 +40,7 @@ int System(const char* command) {
 }
 
 //this function handles downloading a map from the server
-int donwload_map(char* mapID) {
+int download_map(char* mapID) {
     /* functionality for multiple maps is a future feature
     char cmd[CMD_LEN];
     if(strcpy(cmd, "curl ") == null)
@@ -48,8 +48,10 @@ int donwload_map(char* mapID) {
     if(strcat(cmd, mapID) == null)
         return -1;
     */
-    const char* cmd = "curl http://35.229.88.91/v1/map.png";
-    return System(cmd);
+    char cmd_str[CMD_LEN];
+    sprintf(cmd_str, "%s%s%s%s", "curl http://", SERVER_ADDR, "/v1/maps/",
+            (char*)message->payload);
+    return System(cmd_str);
 }
 
 //this function runs a shell script that starts ROS nodes used for mapping
@@ -115,7 +117,7 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
     }
     if(strcmp("robot/map_msgs", message->topic) == 0) {
         //download the specified map
-        if(donwload_map((char*)message->payload)) {
+        if(download_map((char*)message->payload)) {
             std::cout << "error downloading map\n";
         } 
     }
