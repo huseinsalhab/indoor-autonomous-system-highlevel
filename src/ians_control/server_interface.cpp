@@ -10,10 +10,10 @@
 #define SERVER_ADDR "35.197.98.244"
 
 // define paths of shell scripts called 
-#define START_MAPPING_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/start_mapping.sh"
-#define STOP_MAPPING_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh"
-#define SET_NAV_GOAL_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh"
-#define SET_INITIAL_POSE_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_initial_pose.sh"
+#define START_MAPPING_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/start_mapping.sh"
+#define STOP_MAPPING_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh"
+#define SET_NAV_GOAL_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh"
+#define SET_INITIAL_POSE_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/set_initial_pose.sh"
 
 
 /* AUTHOR: Kyle Ebding
@@ -40,7 +40,7 @@ int System(const char* command) {
 }
 
 //this function handles downloading a map from the server
-int donwload_map(char* mapID) {
+int download_map(char* mapID) {
     /* functionality for multiple maps is a future feature
     char cmd[CMD_LEN];
     if(strcpy(cmd, "curl ") == null)
@@ -48,8 +48,10 @@ int donwload_map(char* mapID) {
     if(strcat(cmd, mapID) == null)
         return -1;
     */
-    const char* cmd = "curl http://35.229.88.91/v1/map.png";
-    return System(cmd);
+    char cmd_str[CMD_LEN];
+    sprintf(cmd_str, "%s%s%s%s", "curl http://", SERVER_ADDR, "/v1/maps/",
+            (char*)message->payload);
+    return System(cmd_str);
 }
 
 //this function runs a shell script that starts ROS nodes used for mapping
@@ -66,15 +68,14 @@ void stop_mapping() {
 //this function runs a shell script that sends the input arguments to /move_base_simple/goal
 void set_nav_goal(const char* x_val, const char* y_val) {
     char cmd_str[CMD_LEN];
-    sprintf(cmd_str, "%s %s %s", SET_NAV_GOAL_SCRIPT, x_val, y_val);
+    sprintf(cmd_str, "%s %s %s &", SET_NAV_GOAL_SCRIPT, x_val, y_val);
     System(cmd_str);
 }
 
 //this functions runns a shell script that sends the input arguments to /initialpose
 void set_initial_pose(const char* x_val, const char* y_val, const char* facing) {
     char cmd_str[CMD_LEN];
-    sprintf(cmd_str, "%s %s %s %s", SET_INITIAL_POSE_SCRIPT, x_val, y_val, 
-            facing);
+    sprintf(cmd_str, "%s %s %s %s &", SET_INITIAL_POSE_SCRIPT, x_val, y_val, facing);
     System(cmd_str);
 }
 
@@ -115,7 +116,7 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
     }
     if(strcmp("robot/map_msgs", message->topic) == 0) {
         //download the specified map
-        if(donwload_map((char*)message->payload)) {
+        if(download_map((char*)message->payload)) {
             std::cout << "error downloading map\n";
         } 
     }
