@@ -17,8 +17,8 @@ source /opt/ros/kinetic/setup.bash
 source /home/ubuntu/indoor-autonomous-system-highlevel/devel/setup.bash
 
 # grab orientation quaternion's z and w values
-quat_z=$(rostopic echo -n 1 /quat_z )
-quat_w=$(rostopic echo -n 1 /quat_w )
+quat_z=$(rostopic echo -n 1 /quat_z | head -n 1 | cut -c 7-)
+quat_w=$(rostopic echo -n 1 /quat_w | head -n 1 | cut -c 7-)
 
 # covariance matrix copied from output of setting initial pose in rviz
 rostopic pub --once /initialpose geometry_msgs/PoseWithCovarianceStamped '{header: {stamp: now, frame_id: "map"}, pose: {pose: {position: {x: '$1', y: '$2'}, orientation: {x: 0, y: 0, z: '$quat_z', w: '$quat_w'}}, covariance: [0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.06853891945200942]}}' &
