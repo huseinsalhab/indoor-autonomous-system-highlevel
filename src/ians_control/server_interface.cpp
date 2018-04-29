@@ -75,8 +75,7 @@ void set_nav_goal(const char* x_val, const char* y_val) {
 //this functions runns a shell script that sends the input arguments to /initialpose
 void set_initial_pose(const char* x_val, const char* y_val, const char* facing) {
     char cmd_str[CMD_LEN];
-    sprintf(cmd_str, "%s %s %s %s &", SET_INITIAL_POSE_SCRIPT, x_val, y_val, 
-            facing);
+    sprintf(cmd_str, "%s %s %s %s &", SET_INITIAL_POSE_SCRIPT, x_val, y_val, facing);
     System(cmd_str);
 }
 
@@ -112,7 +111,7 @@ void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_
         //only values we care about are x position, y position, and facing
         const char* x_val = strtok((char*)message->payload, " ");
         const char* y_val = strtok(NULL, " ");
-        const char* facing = strtok(NULL, " ");
+        const char* facing = strtok(NULL, "\n");
         set_initial_pose(x_val, y_val, facing);
     }
     if(strcmp("robot/map_msgs", message->topic) == 0) {

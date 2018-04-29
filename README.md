@@ -2,7 +2,7 @@
 
 ### Repository Hierarchy
 
-The Indoor Autonmous System Software is contained within three repositories. 
+The Indoor Autonomous System Software is contained within three repositories.
 
 1. [indoor-autonomous-system-cloud](https://github.com/thedch/indoor-autonomous-system-cloud)
 1. [indoor-autonomous-system-highlevel](https://github.com/thedch/indoor-autonomous-system-highlevel)
@@ -10,9 +10,9 @@ The Indoor Autonmous System Software is contained within three repositories.
 
 The cloud repository contains code to run the front facing Flask server on GCE. This presents the user with a control panel containing destinations inside the floor plan, and a kill switch.
 
-The high level repository contains ROS code that runs on a Raspberry Pi. This deals with the ROS navigation stack, manual control of the robot, interfacing with the LiDAR, the cloud server, and the low level micro. 
+The high level repository contains ROS code that runs on a Raspberry Pi. This deals with the ROS navigation stack, manual control of the robot, interfacing with the LiDAR, the cloud server, and the low level micro.
 
-The low level repository contains C++ code that interfaces directly with the sensors and motors to control the direction of the robot and read wheel odometry and IMU data. This data is then passed back to the Raspberry Pi where it is processed by ROS. 
+The low level repository contains C++ code that interfaces directly with the sensors and motors to control the direction of the robot and read wheel odometry and IMU data. This data is then passed back to the Raspberry Pi where it is processed by ROS.
 
 ### Dependencies
 map_server: `sudo apt-get install ros-kinetic-map-server`
@@ -31,7 +31,7 @@ rplidar_ros: `sudo apt-get install ros-kinetic-rplidar-ros`
 ### Coding Standards Doc
 
 #### Golden Rule
-Search on google before asking for help.
+Search on Google before asking for help.
 
 #### Preamble
 1. Every file, the first line will be your name, and date
@@ -42,14 +42,14 @@ Search on google before asking for help.
 
 #### Specifics
 1. Use relevant names for variables. Unless it is an obvious abbreviation, or letter (ex. int "i" in a for loop, you don't need to name it "iterator".). Names will be snake case for local or global variables, but classes will be all capitalized camel case.
-2. USE PARENTHESES. Do not rely on your knowledge of operator precedence. Use parentheses in complex logical structures (Logical, Boolean, Arithmetic operators). 
+2. USE PARENTHESES. Do not rely on your knowledge of operator precedence. Use parentheses in complex logical structures (Logical, Boolean, Arithmetic operators).
 
 		Example:
 		This is BAD: (var1 && var2 || var3 ^ var4)
 		This is GOOD: ( (var1 && var2) || (var 3 ^ var4) )
-		
+
 3.  Everytime that you edit a file, make sure that you use SPACES, not TABS. Make sure UNIX line endings, unless you know what you are doing, no editing code on windows (go through cloud9, a VM, or your raspberry PI, or linux environment to edit code).
-		
+
 		:set ff=unix
 
 <p align="center">
@@ -59,19 +59,20 @@ Search on google before asking for help.
 4. ALL FUNCTIONS, a comment above (multi or single line, just be consistent), listing return type, argument type, and EXPLANATIONS IN ORDER for ALL ARGUMENTS IN ORDER.
 
 5. USE K&R braces and indentation style
-		
+
 		https://en.wikipedia.org/wiki/Indentation_style#K&R
-		C/C++ SINGLE LINE IF STATEMENT ALWAYS HAS BRACES NO MATTER WHAT
-		
+		C/C++ Single line if statement should always have braces
+
 6. Use single quotes for python strings.
 
 #### Version Control
+
 1. Make a branch for any features that you need to add. (Git checkout -b kelvin.new_feature)
 
-2. The proper naming for a branch: 
-		
+2. The proper naming for a branch:
+
 		first_name.feature_name
 		kelvin.adding_slam_module
-		
+
 3. Git pull before you start writing code.
 4. Write a sensible commit statement (nothing too long, nothing too short).

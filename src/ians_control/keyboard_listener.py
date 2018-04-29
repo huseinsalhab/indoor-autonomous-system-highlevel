@@ -10,6 +10,8 @@ from geometry_msgs.msg import Twist
 import pygame
 from collections import defaultdict
 
+vel = .3
+theta = 2
 
 class KeyboardListener(object):
     """Class representing a keyboard listener"""
@@ -32,13 +34,13 @@ class KeyboardListener(object):
     def build_message(self):
         msg = Twist()
         if self.keys['w']: # Forward
-            msg.linear.x = 1 
+            msg.linear.x = vel
         if self.keys['s']: # Back up
-            msg.linear.x = -1
+            msg.linear.x = vel * -1
         if self.keys['d']: # Turn right
-            msg.angular.z = -4
+            msg.angular.z = theta * -1
         if self.keys['a']: # Turn left
-            msg.angular.z = 4 
+            msg.angular.z = theta
         return msg
 
     def listen(self, callback):

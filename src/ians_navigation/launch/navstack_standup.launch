@@ -5,22 +5,24 @@
 	<!--node name="map_server" pkg="map_server" type="map_server" args"$(arg map_file)"/-->
 
 	<!-- dont need next line. if bugs come up, uncomment next line, and change global_costmap_param to odom frame-->
-	<!--
-		<node pkg="tf" type="static_transform_publisher" name="map_odom_broadcaster" args="0 0 0 0 0 0 map odom 100"/>
-	-->
+		
+    <node pkg="tf" type="static_transform_publisher" name="laser_baselink_broadcaster" args="0 0 0 0 0 0 base_link laser 100"/>
+    <node pkg="tf" type="static_transform_publisher" name="scan_baselink_broadcaster" args="0 0 0 0 0 0 base_link scan 100"/>
 
-	<!-- Standup Localization -->
-  	<node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
-    		<param name="output_frame" value="odom"/>
-    		<param name="freq" value="30.0"/>
-    		<param name="sensor_timeout" value="1.0"/>
-   		<param name="odom_used" value="true"/>
-    		<param name="imu_used" value="true"/>
-    		<param name="vo_used" value="false"/>
-    		<param name="debug" value="false"/>
-    		<param name="self_diagnose" value="false"/>
-  	</node>
-	
+    <!-- Standup Localization -->
+<!--
+    <node pkg="robot_pose_ekf" type="robot_pose_ekf" name="robot_pose_ekf">
+        <param name="output_frame" value="odom_combined"/>
+        <param name="base_footprint_name" value="base_link"/>
+        <param name="freq" value="30.0"/>
+        <param name="sensor_timeout" value="1.0"/>
+        <param name="odom_used" value="true"/>
+        <param name="imu_used" value="true"/>
+        <param name="vo_used" value="false"/>
+        <param name="debug" value="false"/>
+        <param name="self_diagnose" value="false"/>
+    </node>
+-->
 	<node pkg="amcl" type="amcl" name="amcl" output="screen">
 		
 		<param name="odom_frame_id" value="odom"/>
@@ -45,6 +47,5 @@
         <param name="move_base/DWAPlannerROS/yaw_goal_tolerance" value="1.0"/>
         <param name="move_base/DWAPlannerROS/xy_goal_tolerance" value="1.0"/>
    </node>
-
 
 </launch>
