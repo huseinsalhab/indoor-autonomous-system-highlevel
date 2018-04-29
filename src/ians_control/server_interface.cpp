@@ -68,14 +68,14 @@ void stop_mapping() {
 //this function runs a shell script that sends the input arguments to /move_base_simple/goal
 void set_nav_goal(const char* x_val, const char* y_val) {
     char cmd_str[CMD_LEN];
-    sprintf(cmd_str, "%s %s %s", SET_NAV_GOAL_SCRIPT, x_val, y_val);
+    sprintf(cmd_str, "%s %s %s &", SET_NAV_GOAL_SCRIPT, x_val, y_val);
     System(cmd_str);
 }
 
 //this functions runns a shell script that sends the input arguments to /initialpose
 void set_initial_pose(const char* x_val, const char* y_val, const char* facing) {
     char cmd_str[CMD_LEN];
-    sprintf(cmd_str, "%s %s %s %s", SET_INITIAL_POSE_SCRIPT, x_val, y_val, 
+    sprintf(cmd_str, "%s %s %s %s &", SET_INITIAL_POSE_SCRIPT, x_val, y_val, 
             facing);
     System(cmd_str);
 }
