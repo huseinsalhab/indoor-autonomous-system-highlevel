@@ -5,6 +5,8 @@
 source /opt/ros/kinetic/setup.bash
 source /home/ubuntu/indoor-autonomous-system-highlevel/devel/setup.bash
 
+killall -9 server_interface.out # enforce multiple server interface not running
+
 /home/ubuntu/indoor-autonomous-system-highlevel/src/ians_control/server_interface.out &
 
 # roslaunch ians_control ians_ctl.launch & # Spin up Motors and Keyboard
