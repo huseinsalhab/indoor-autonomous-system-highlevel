@@ -18,8 +18,8 @@
 
 /* AUTHOR: Kyle Ebding
 
-   This program runs a ROS node server-to-robot_mqtt_bridge that takes
-   incoming MQTT messages and processes them to control the robot.
+   This program runs in the background receiving incoming MQTT messages from
+   the cloud server and processes them via shell scripts to control the robot.
 
    This program uses the Mosquitto MQTT broker to receive MQTT messages.
 
