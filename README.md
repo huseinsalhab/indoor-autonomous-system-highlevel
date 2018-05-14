@@ -56,14 +56,13 @@ Search on Google before asking for help.
   <img src="https://cdn.pbrd.co/images/H5SkFiL.png" width="600"/>
 </p>
 
-4. ALL FUNCTIONS, a comment above (multi or single line, just be consistent), listing return type, argument type, and EXPLANATIONS IN ORDER for ALL ARGUMENTS IN ORDER.
 
-5. USE K&R braces and indentation style
+4. USE K&R braces and indentation style
 
 		https://en.wikipedia.org/wiki/Indentation_style#K&R
 		C/C++ Single line if statement should always have braces
 
-6. Use single quotes for python strings.
+5. Use single quotes for python strings.
 
 #### Version Control
 
