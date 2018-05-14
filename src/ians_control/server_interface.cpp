@@ -10,10 +10,10 @@
 #define SERVER_ADDR "35.197.98.244"
 
 // define paths of shell scripts called 
-#define START_MAPPING_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/start_mapping.sh"
-#define STOP_MAPPING_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh"
-#define SET_NAV_GOAL_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh"
-#define SET_INITIAL_POSE_SCRIPT "/home/kyle/ians/indoor-autonomous-system-highlevel/scripts/set_initial_pose.sh"
+#define START_MAPPING_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/start_mapping.sh"
+#define STOP_MAPPING_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/stop_mapping.sh"
+#define SET_NAV_GOAL_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_nav_goal.sh"
+#define SET_INITIAL_POSE_SCRIPT "/home/ubuntu/indoor-autonomous-system-highlevel/scripts/set_initial_pose.sh"
 
 
 /* AUTHOR: Kyle Ebding
@@ -41,13 +41,6 @@ int System(const char* command) {
 
 //this function handles downloading a map from the server
 int download_map(char* mapID) {
-    /* functionality for multiple maps is a future feature
-    char cmd[CMD_LEN];
-    if(strcpy(cmd, "curl ") == null)
-        return -1;
-    if(strcat(cmd, mapID) == null)
-        return -1;
-    */
     char cmd_str[CMD_LEN];
     sprintf(cmd_str, "%s%s%s%s", "curl http://", SERVER_ADDR, "/v1/maps/",
             (char*)message->payload);
@@ -88,8 +81,9 @@ void connect_callback(struct mosquitto *mosq, void *obj, int result) {
 // this function defines how the program reacts to incoming messages
 void message_callback(struct mosquitto *mosq, void *obj, const struct mosquitto_message *message) {
 
+    /* printing for debugging
     fprintf(stdout, "received message '%.*s' for topic '%s'\n", message->payloadlen,
-            (char*)message->payload, message->topic);
+            (char*)message->payload, message->topic); */
         
 
     // check expected topics. if there's a match, publish to that topic

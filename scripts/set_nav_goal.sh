@@ -16,6 +16,4 @@ fi
 source /opt/ros/kinetic/setup.bash
 source /home/ubuntu/indoor-autonomous-system-highlevel/devel/setup.bash
 
-#rosrun ians_control set_nav_goal $1 $2
-
 rostopic pub --once move_base_simple/goal geometry_msgs/PoseStamped '{header: {stamp: now, frame_id: "map"}, pose: {position: {x: '$1', y: '$2'}, orientation: {x: 0, y: 0, z: 0, w: 1}}}' &
