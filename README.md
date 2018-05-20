@@ -34,9 +34,9 @@ rplidar_ros: `sudo apt-get install ros-kinetic-rplidar-ros`
 Search on Google before asking for help.
 
 #### Preamble
-1. Every file, the first line will be your name, and date
-2. Every file, the second line will be a short description purpose of the code written
-3. Reserve 3-4 lines (multiline comment) for any links, resources, or help that you get while writing your code. The purpose is to keep tracks of links you use in case we run into similar problems again (VERY IMPORTANT).
+1. Every file, the first line should be your name, and date
+2. Every file, the second line should be a short description purpose of the code written
+3. Reserve 3-4 lines (multiline comment) for any links, resources, or help that you get while writing your code. The purpose is to keep tracks of links you use in case we run into similar problems again.
 4. For step 3, do this for every file, or for blocks of code where the links are relevant.
 5. Make comments short, but with good explanation. Nothing too long, nothing too short. Comments are for things that are not obvious, or to highlight and explain salient (relevant) lines of code.
 
@@ -48,13 +48,7 @@ Search on Google before asking for help.
 		This is BAD: (var1 && var2 || var3 ^ var4)
 		This is GOOD: ( (var1 && var2) || (var 3 ^ var4) )
 
-3.  Everytime that you edit a file, make sure that you use SPACES, not TABS. Make sure UNIX line endings, unless you know what you are doing, no editing code on windows (go through cloud9, a VM, or your raspberry PI, or linux environment to edit code).
-
-		:set ff=unix
-
-<p align="center">
-  <img src="https://cdn.pbrd.co/images/H5SkFiL.png" width="600"/>
-</p>
+3. Everytime that you edit a file, please use SPACES, not TABS. Make sure UNIX line endings.
 
 
 4. USE K&R braces and indentation style
@@ -74,4 +68,4 @@ Search on Google before asking for help.
 		kelvin.adding_slam_module
 
 3. Git pull before you start writing code.
-4. Write a sensible commit statement (nothing too long, nothing too short).
+4. Write a sensible commit statement.

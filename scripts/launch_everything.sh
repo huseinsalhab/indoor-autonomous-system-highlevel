@@ -9,7 +9,6 @@ killall -9 server_interface.out # enforce multiple server interface not running
 
 /home/ubuntu/indoor-autonomous-system-highlevel/src/ians_control/server_interface.out &
 
-# roslaunch ians_control ians_ctl.launch & # Spin up Motors and Keyboard
 roslaunch ians_control ians_ctl_lowlevelPID.launch & # Spin up Motors and Keyboard
 
 sleep 5

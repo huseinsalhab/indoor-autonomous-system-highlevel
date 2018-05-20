@@ -1,2 +1,3 @@
 # Contains launche for mapping
-This is all what is required to do mapping and create maps. NOT Navigation.
+
+This directory containes files used to map an environment, as well as the maps that we have created.
