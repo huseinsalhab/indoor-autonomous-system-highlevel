@@ -21,6 +21,8 @@ differential-drive package: `git clone https://github.com/jfstepha/differential-
 
 rplidar_ros: `sudo apt-get install ros-kinetic-rplidar-ros`
 
+navigation stack: `sudo apt-get install ros-kinetic-navigation`
+
 ### Setting Up the Workspace
 1. Clone this project.
 1. `cd` into this project and `catkin_make`
