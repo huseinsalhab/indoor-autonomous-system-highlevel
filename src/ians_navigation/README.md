@@ -6,7 +6,10 @@ Includes launch files for navigation stack, amcl, as well as move_base config
 
 - Additional documentation can be found at http://wiki.ros.org/navigation
 
-## Base Local Planner Params
+## Move Base Config
+Configuration files written in yaml, are referenced in the roslaunch launch file with rosparam.
+
+### Base Local Planner Params
 - max_vel_x - Maximum velocity expected for forward movement. (M/S)
 - min_vel_x - Minimum velocity expected for forward movement. (To Avoid stall)
 - max_vel_theta - Max velocity expected angular
@@ -19,7 +22,7 @@ Includes launch files for navigation stack, amcl, as well as move_base config
 - vtheta_samples - Number of samples to take for velocity simulations of angular movement (Base planner tries movements before executing)
 - vx_samples - Number of samples to take for velocity simulations of forward movement
 
-## Costmap Common Params
+### Costmap Common Params
 
 - obstacle_range - Range at which to consider something an obstacle on costmap
 - raytrace_range - Range for Raytracing
@@ -30,7 +33,7 @@ Includes launch files for navigation stack, amcl, as well as move_base config
 - laser_scan_sensor - Parameter specifying ROS LiDAR configuration , contains frame, data type, topic, etc
 
 
-## Global / Local costmap params
+### Global / Local costmap params
 
 - global_frame - Specifies the frame for costmap
 - robot_base_frame - Specifies the TF frame for robot base
