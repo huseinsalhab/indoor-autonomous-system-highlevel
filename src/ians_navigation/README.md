@@ -1,6 +1,10 @@
 # Navigation Files
 
-Includes launch files for navigation stack, amcl, rviz bringup
+Includes launch files for navigation stack, amcl, as well as move_base config
+
+- Launch file contains static transform publishers to relate sensor readings to robotic base. Also contains Localization standup (AMCL) and Navigation standup (Move_Base)
+
+- Additional documentation can be found at http://wiki.ros.org/navigation
 
 ## Base Local Planner Params
 - max_vel_x - Maximum velocity expected for forward movement. (M/S)
