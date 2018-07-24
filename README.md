@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The Indoor Autonomous Navigation System (IANS) is a senior thesis project at the University of California Santa Cruz. IANS' purpose is to create a self driving robotic car solution in an indoor environment where GPS systems are not feasible. By researching recent developments in probabilistic robotics and levaraging existing open source Robot Operating System software we implemented a cost efficient and extendable solution to be used in systems where autonomous navigation is required.
+The Indoor Autonomous Navigation System (IANS) is a senior thesis project at the University of California Santa Cruz. IANS' purpose is to create a self driving robotic car solution in an indoor environment where GPS systems are not feasible. By researching recent developments in probabilistic robotics and leveraging existing open source Robot Operating System software we implemented a cost efficient and extendable solution to be used in systems where autonomous navigation is required.
 
 Our prototype uses off the shelf hardware such as the RPLidar, Raspberry Pi, and Teensy microcontroller, as well as general purpose motor encoders and controllers. 
 
